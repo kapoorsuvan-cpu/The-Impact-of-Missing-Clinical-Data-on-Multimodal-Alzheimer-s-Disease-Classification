@@ -4,51 +4,150 @@
 
 ## Overview
 
-This project investigates the robustness of multimodal machine learning systems for Alzheimer’s disease classification under conditions of incomplete clinical information. The central motivation comes from a major challenge in real-world healthcare systems: patient data is rarely complete. Clinical assessments may be unavailable, cognitive testing may be partially administered, or electronic medical records may contain missing fields. While many machine learning studies assume perfectly complete datasets, clinical deployment environments are far less controlled. The goal of this work was therefore not simply to build a high-performing Alzheimer’s classifier, but to evaluate how performance changes when one source of information becomes unavailable and whether models can be trained to become more resilient to this missingness.
+This project investigates how multimodal machine learning systems for Alzheimer’s disease diagnosis behave when clinical information becomes incomplete or unavailable. While many Alzheimer’s classification studies assume perfectly complete patient records, real-world healthcare systems rarely contain fully complete data. Cognitive testing may be partially administered, demographic information may be unavailable, and electronic medical records often contain missing fields.
 
-The project used data from the Alzheimer’s Disease Neuroimaging Initiative (ADNI), one of the largest and most widely used public datasets for Alzheimer’s disease research. ADNI contains multimodal patient information including neuroimaging, cognitive testing, demographics, and longitudinal follow-up data. Two major sources of information were incorporated into the pipeline. The first consisted of clinical and cognitive variables obtained from the ADSL dataset. These included demographic variables such as age, sex, and years of education, as well as memory and cognitive performance measures including delayed verbal recall, immediate verbal recall, and trail-making performance scores. The second modality consisted of structural MRI biomarkers extracted from the UCSFFSX6 dataset, which contains FreeSurfer-derived neuroimaging measurements describing structural brain anatomy and atrophy patterns associated with neurodegeneration.
+The central goal of this project was therefore not simply to maximize classification accuracy, but to evaluate how robust multimodal models remain when one source of information disappears.
 
-The workflow began in R because the original ADNI files were distributed in the .rda format, which is native to the R ecosystem. The clinical and MRI datasets were loaded into R, converted into CSV format, and then transferred into Python for all subsequent preprocessing and machine learning analysis. Once loaded into Python, the data pipeline focused on creating a clean, reproducible multimodal dataset suitable for machine learning experimentation. Patients were filtered to include only cognitively normal individuals (CN) and dementia patients (DEM), producing a binary classification task. Diagnosis labels were encoded numerically to support downstream machine learning models.
+This study combines:
 
-A substantial portion of the work involved carefully designing the feature set in a biologically meaningful and scientifically defensible way. Initially, highly diagnostic clinical variables such as MMSE, CDRSB, MOCA, and FAQ scores were included. However, exploratory analysis revealed that several of these features alone could nearly perfectly predict diagnosis. This created a semantic leakage problem in which the model was effectively learning diagnostic criteria rather than discovering meaningful multimodal disease patterns. These features were therefore removed from the final modeling pipeline. Instead, the final clinical modality focused on weaker but biologically relevant predictors including age, sex, education, delayed verbal memory recall, immediate verbal recall, and trail-making performance.
+* Clinical and cognitive features
+* Structural MRI biomarkers
+* Missing modality simulation
+* Robustness training through modality dropout
+* Cross-validated evaluation
 
-The MRI modality represented a fundamentally different source of information. While the clinical modality captures observable cognitive and behavioral performance, the MRI modality captures structural neurodegeneration within the brain itself. The FreeSurfer MRI features describe volumetric and structural measurements across numerous brain regions that are known to be affected in Alzheimer’s disease. Because the MRI dataset contained hundreds of imaging variables, dimensionality reduction was necessary to avoid overfitting. The top MRI biomarkers were therefore selected using variance-based filtering, allowing the final model to focus on the most informative structural features.
-
-After cleaning and preprocessing, the clinical and MRI datasets were merged at the patient level using RID identifiers. Missing MRI values were handled through median imputation rather than row deletion in order to preserve patient counts and maintain statistical power. The final multimodal dataset combined clinical variables with structural MRI biomarkers, creating a biologically meaningful representation of both behavioral and anatomical disease manifestations.
-
-Multiple machine learning models were evaluated, including Logistic Regression, Random Forest, and Extra Trees classifiers. The dataset was divided into stratified training and testing partitions, and feature scaling was applied to ensure stable model training. Initial experiments demonstrated that the multimodal models achieved strong classification performance, with Logistic Regression ultimately emerging as the strongest and most stable model. After removal of semantically leaky variables, the final baseline multimodal system achieved a realistic and highly credible classification performance.
-
-The most important component of the project involved evaluating robustness under missing modalities. To simulate realistic clinical missingness, all clinical features were removed from the test dataset while MRI features remained available. Conceptually, this experiment represents a deployment scenario in which imaging information exists but clinical testing data is unavailable or incomplete. Under these conditions, the baseline multimodal model experienced a substantial decline in performance. The original Logistic Regression model achieved a strong baseline ROC-AUC of approximately 0.977 under full multimodal conditions. However, once the clinical modality was removed, performance dropped to approximately 0.771 ROC-AUC. This represented a degradation of roughly 20.5 percentage points, demonstrating that multimodal systems can become highly dependent on clinical information.
-
-The central contribution of the project came from the implementation of modality dropout training. During training, clinical features were intentionally removed for random subsets of patients. This forced the model to learn how to make predictions even when clinical information was unavailable. Biologically, this simulates the uncertainty and incompleteness that frequently occur in real clinical environments. Rather than overfitting to a single highly informative modality, the model learned to distribute predictive importance across both MRI and clinical information sources.
-
-The robustness-trained model produced one of the most important findings of the project. While maintaining nearly identical full-data performance, the robust model performed substantially better when clinical data was missing. The robustness-trained Logistic Regression model achieved an ROC-AUC of approximately 0.980 under full multimodal conditions, nearly identical to the original baseline model. More importantly, when evaluated under missing-clinical conditions, the robustness-trained model achieved an ROC-AUC of approximately 0.866. This reduced the degradation in predictive performance from roughly 20.5 percentage points down to approximately 11.4 percentage points.
-
-These findings demonstrated that simple modality dropout strategies can meaningfully improve resilience to incomplete patient information without sacrificing baseline predictive accuracy. In practical terms, the model became significantly more stable when one modality disappeared.
-From a biological and translational perspective, this finding is important because it shifts the focus away from simply maximizing classification accuracy and toward designing clinically deployable machine learning systems. In practice, healthcare AI systems must operate under conditions of imperfect and incomplete information. A model that performs slightly worse under ideal conditions but remains stable when data is missing may ultimately be far more useful in real-world medicine.
-
-The project therefore evolved from a standard Alzheimer’s disease classification study into a broader investigation of robustness, multimodal learning, and resilience under clinical missingness. The final framework demonstrates that multimodal machine learning systems can be trained not only to classify disease effectively, but also to tolerate incomplete healthcare data in a substantially more reliable manner.
-
-# Technical Pipeline
-
-## Data Pipeline Overview
-
-The overall technical workflow for the project was divided into several stages:
-
-1. Convert ADNI `.rda` files into CSV format using R
-2. Load and preprocess datasets in Python
-3. Create biologically meaningful multimodal feature groups
-4. Merge clinical and MRI data at the patient level
-5. Handle missing values and feature filtering
-6. Train and evaluate machine learning models
-7. Simulate missing modalities
-8. Train robustness-enhanced models using modality dropout
+The final results demonstrate that multimodal models can become highly dependent on clinical information, but that robustness training substantially improves resilience to missing data while maintaining nearly identical baseline predictive performance.
 
 ---
 
-## R Data Conversion Pipeline
+# Research Motivation
 
-The ADNI datasets were originally distributed in the `.rda` format. Because these files are native to the R ecosystem, the first step of the project involved converting them into CSV files that could later be processed in Python.
+Alzheimer’s disease is one of the most important neurodegenerative disorders worldwide. Early diagnosis is clinically valuable because:
+
+* treatment interventions are more effective earlier in disease progression
+* patients and families can better plan long-term care
+* clinicians can monitor disease progression sooner
+* enrollment into therapeutic trials improves
+
+Machine learning systems have increasingly been used to assist Alzheimer’s classification by integrating:
+
+* cognitive testing
+* demographic information
+* MRI imaging
+* biomarkers
+* longitudinal patient data
+
+However, many existing machine learning studies assume complete patient information. In real clinical settings, this assumption is unrealistic.
+
+Examples of real-world missingness include:
+
+* incomplete cognitive testing
+* unavailable MRI scans
+* missing demographic variables
+* partially transferred medical records
+* inconsistent healthcare documentation
+
+A clinically deployable healthcare AI system must therefore remain stable even when parts of the patient record are missing.
+
+This project specifically investigates:
+
+> How does multimodal Alzheimer’s disease classification degrade under missing clinical information, and can modality dropout training improve robustness to missing data?
+
+---
+
+# Dataset
+
+## Alzheimer’s Disease Neuroimaging Initiative (ADNI)
+
+This project uses data from the Alzheimer’s Disease Neuroimaging Initiative (ADNI), one of the largest and most widely used public Alzheimer’s research datasets.
+
+ADNI contains:
+
+* demographic information
+* cognitive testing
+* MRI imaging
+* PET imaging
+* longitudinal follow-up
+* clinical diagnosis labels
+
+The study focused specifically on:
+
+* Cognitively Normal (CN) patients
+* Dementia (DEM) patients
+
+creating a binary classification task.
+
+---
+
+# Modalities Used
+
+## Clinical Modality
+
+The clinical modality captures observable behavioral and cognitive performance.
+
+Final clinical variables:
+
+| Feature  | Biological Meaning                                               |
+| -------- | ---------------------------------------------------------------- |
+| AGE      | Alzheimer’s risk increases with age                              |
+| SEX      | Sex differences may influence disease prevalence and progression |
+| EDUC     | Education relates to cognitive reserve                           |
+| RAVLTFG  | Delayed verbal memory recall                                     |
+| RAVLTIMM | Immediate verbal memory recall                                   |
+| TRABSCOR | Executive function and processing speed                          |
+
+These variables were intentionally chosen because they are biologically meaningful without directly encoding diagnosis.
+
+---
+
+## Removal of Semantically Leaky Features
+
+Several highly diagnostic cognitive variables were intentionally removed:
+
+* MMSCORE
+* MOCA
+* CDRSB
+* FAQTOTAL
+
+These variables produced near-perfect classification performance because they strongly overlap with the diagnostic criteria used to define Alzheimer’s disease itself.
+
+Including them would create semantic leakage, where the model effectively memorizes diagnostic definitions instead of learning meaningful multimodal disease patterns.
+
+Removing these variables created a more scientifically realistic and clinically defensible modeling framework.
+
+---
+
+## MRI Modality
+
+The MRI modality captures structural neurodegeneration within the brain.
+
+MRI features were extracted from the UCSFFSX6 FreeSurfer dataset.
+
+These biomarkers describe:
+
+* cortical thickness
+* volumetric brain measurements
+* ventricular enlargement
+* regional atrophy patterns
+
+Alzheimer’s disease is associated with structural degeneration in regions involved in:
+
+* memory
+* executive function
+* cognition
+* hippocampal processing
+
+MRI therefore provides complementary anatomical information that differs fundamentally from behavioral cognitive testing.
+
+---
+
+# Technical Pipeline
+
+## Step 1 — Convert ADNI .rda Files into CSV
+
+The original ADNI datasets were distributed in R `.rda` format.
+
+The datasets were converted into CSV format using R.
 
 ### Clinical Dataset Conversion
 
@@ -76,64 +175,40 @@ write.csv(df, "UCSFFSX6.csv", row.names = FALSE)
 
 ---
 
-## Python Preprocessing Pipeline
+## Step 2 — Python Preprocessing Pipeline
 
-Once the datasets were converted into CSV format, Python was used for all downstream preprocessing and machine learning analysis.
+The preprocessing workflow included:
 
-The preprocessing pipeline included:
-
-* Diagnosis filtering
-* Label encoding
-* Clinical feature engineering
-* MRI feature filtering
+* diagnosis filtering
+* patient-level merging
+* label encoding
 * MRI scan deduplication
-* Missing value handling
-* Patient-level dataset merging
-* MRI dimensionality reduction
-
----
-
-## Clinical Feature Engineering
-
-The final clinical modality consisted of:
-
-* AGE
-* SEX
-* EDUC
-* RAVLTFG
-* RAVLTIMM
-* TRABSCOR
-
-The following highly diagnostic variables were intentionally removed:
-
-* MMSCORE
-* MOCA
-* CDRSB
-* FAQTOTAL
-
-These variables were removed because they created semantic leakage and produced unrealistically perfect classification performance.
+* feature engineering
+* missing value handling
+* feature filtering
+* scaling
+* dimensionality reduction
 
 ---
 
 ## MRI Feature Engineering
 
-The MRI modality was derived from the UCSFFSX6 FreeSurfer dataset.
+The MRI dataset originally contained hundreds of structural variables.
 
-The MRI pipeline involved:
+To reduce overfitting:
 
-* Selecting the latest MRI scan per patient
-* Removing metadata variables
-* Filtering out highly missing MRI biomarkers
-* Keeping only numeric structural MRI variables
-* Selecting the top 30 MRI biomarkers using variance filtering
+* metadata variables were removed
+* highly missing biomarkers were filtered out
+* only numeric MRI biomarkers were retained
+* variance filtering selected the top 30 MRI biomarkers
 
-This reduced the MRI feature space from hundreds of variables to a smaller and more stable subset suitable for machine learning.
+This reduced the MRI feature space to the most informative structural predictors.
 
 ---
 
 ## Missing Value Handling
 
-Missing MRI values were handled using median imputation:
+Missing MRI values were handled using median imputation.
 
 ```python
 from sklearn.impute import SimpleImputer
@@ -141,26 +216,15 @@ from sklearn.impute import SimpleImputer
 imputer = SimpleImputer(strategy="median")
 ```
 
-Median imputation was chosen because it preserved significantly more patients than complete-row deletion while remaining robust to outliers.
+Median imputation was chosen because:
+
+* it preserves significantly more patients
+* it is robust to outliers
+* it avoids major sample loss from row deletion
 
 ---
 
-## Machine Learning Pipeline
-
-Three machine learning models were evaluated:
-
-* Logistic Regression
-* Random Forest
-* Extra Trees
-
-The workflow consisted of:
-
-* Stratified train/test splitting
-* Standard feature scaling
-* Model comparison using ROC-AUC
-* Visualization of ROC curves and feature importance
-
-### Train/Test Split
+## Train/Test Split
 
 ```python
 X_train, X_test, y_train, y_test = train_test_split(
@@ -172,7 +236,14 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 ```
 
-### Feature Scaling
+Stratified splitting ensured class balance between:
+
+* cognitively normal patients
+* dementia patients
+
+---
+
+## Feature Scaling
 
 ```python
 scaler = StandardScaler()
@@ -181,43 +252,195 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 ```
 
-### Logistic Regression Model
-
-```python
-LogisticRegression(
-    class_weight="balanced",
-    max_iter=1000
-)
-```
+Scaling stabilized model training and prevented variables with larger numeric ranges from dominating optimization.
 
 ---
 
-## Missing Modality Experiment (Cell 4)
+# Machine Learning Models
 
-The first major experiment simulated missing clinical information.
+Three machine learning models were evaluated:
 
-During testing, all clinical variables were removed:
+| Model               | Purpose                           |
+| ------------------- | --------------------------------- |
+| Logistic Regression | Interpretable linear baseline     |
+| Random Forest       | Nonlinear ensemble baseline       |
+| Extra Trees         | High-variance ensemble comparison |
+
+Logistic Regression ultimately emerged as the strongest and most stable model.
+
+---
+
+# Initial Model Comparison
+
+## Baseline Model Performance
+
+| Model               | ROC-AUC |
+| ------------------- | ------- |
+| Logistic Regression | Highest |
+| Random Forest       | Strong  |
+| Extra Trees         | Strong  |
+
+Logistic Regression achieved the best balance of:
+
+* accuracy
+* stability
+* interpretability
+* robustness
+
+---
+
+# Visualization — Class Distribution
+
+![Class Distribution](5b1fa9d8-8385-4b1e-ad50-2d23ff8771a0.png)
+
+## What This Visualization Shows
+
+This bar chart shows the number of patients in each diagnostic category:
+
+* Diagnosis 0 = Cognitively Normal (CN)
+* Diagnosis 1 = Dementia (DEM)
+
+The dataset contains substantially more cognitively normal patients than dementia patients.
+
+This imbalance is important because machine learning models can become biased toward the majority class. Because of this, evaluation metrics such as:
+
+* ROC-AUC
+* Recall
+* Sensitivity
+* F1-score
+
+are more informative than accuracy alone.
+
+The class imbalance also explains why stratified train/test splitting and balanced class weighting were used throughout the project.
+
+---
+
+# Visualization — Model Comparison
+
+![Model Comparison](32b64c13-4873-490b-8b4a-2bfbfb6dad65.png)
+
+## What This Visualization Shows
+
+This figure compares ROC-AUC performance across all evaluated machine learning models.
+
+Key findings:
+
+* Logistic Regression achieved the strongest overall performance
+* Extra Trees also performed strongly
+* Random Forest produced slightly lower performance
+
+The results suggest that the Alzheimer’s classification problem was largely linearly separable after multimodal feature integration and preprocessing.
+
+Because Logistic Regression also provides:
+
+* strong interpretability
+* stability
+* lower overfitting risk
+
+it was selected as the primary model for robustness experiments.
+
+---
+
+# Visualization — ROC Curves
+
+![ROC Curves](b6ae9b90-5297-4571-a1b5-68fe00a43bb3.png)
+
+## What This Visualization Shows
+
+ROC curves visualize how effectively each model separates:
+
+* cognitively normal patients
+* dementia patients
+
+across all classification thresholds.
+
+The x-axis represents:
+
+* False Positive Rate
+
+The y-axis represents:
+
+* True Positive Rate (Sensitivity)
+
+The dashed red line represents random guessing.
+
+The closer a curve approaches the upper-left corner, the stronger the classifier.
+
+The Logistic Regression model achieved the strongest ROC-AUC performance:
+
+```text
+ROC-AUC = 0.977
+```
+
+indicating extremely strong discriminative capability.
+
+---
+
+# Missing Clinical Modality Experiment
+
+## Motivation
+
+Real-world healthcare systems frequently contain incomplete clinical records.
+
+To simulate this deployment scenario:
+
+* all clinical features were removed from the test set
+* MRI biomarkers remained available
+
+This experiment evaluated how dependent multimodal systems become on clinical information.
+
+---
+
+## Missing-Modality Simulation
 
 ```python
 X_test_missing[clinical_features] = 0
 ```
 
-This simulated a real-world clinical scenario where:
+This simulated a realistic clinical scenario where:
 
-* MRI data exists
-* Clinical assessments are unavailable or incomplete
-
-The purpose of this experiment was to measure how dependent the multimodal system was on the clinical modality.
-
-The baseline model showed a substantial performance decline under this missingness condition.
+* MRI scans exist
+* cognitive testing is incomplete or unavailable
 
 ---
 
-## Robustness Training (Cell 5)
+# Missing Clinical Modality Results
 
-The final experiment introduced a robustness-training strategy known as modality dropout.
+| Condition                 | ROC-AUC |
+| ------------------------- | ------- |
+| Full Multimodal Data      | 0.977   |
+| Missing Clinical Modality | 0.771   |
 
-During training, clinical variables were randomly removed for subsets of patients:
+## Interpretation
+
+The baseline multimodal model experienced a major decline in performance when clinical information disappeared.
+
+Performance degradation:
+
+```text
+0.205 ROC-AUC reduction
+```
+
+This demonstrates that standard multimodal systems can become highly dependent on clinical features.
+
+---
+
+# Robustness Training Through Modality Dropout
+
+## Motivation
+
+To improve resilience to missing data, modality dropout training was introduced.
+
+During training:
+
+* clinical variables were randomly removed for subsets of patients
+* the model was forced to learn from MRI information alone when necessary
+
+This prevented over-reliance on a single modality.
+
+---
+
+## Modality Dropout Implementation
 
 ```python
 X_train_robust.loc[
@@ -226,94 +449,620 @@ X_train_robust.loc[
 ] = 0
 ```
 
-This forced the model to learn how to make predictions even when clinical information was unavailable.
-
-The resulting robustness-trained model maintained nearly identical full-data performance while dramatically improving performance under missing-clinical conditions.
-
-This became the central contribution of the project.
+This simulates real-world clinical uncertainty during training.
 
 ---
 
-# Visualizations
+# Cross-Validated Robustness Results
 
+## 5-Fold Stratified Cross-Validation
 
-### Figure 1 — Class Distribution
+To ensure statistical reliability:
 
+* 5-fold stratified cross-validation was performed
+* results were averaged across folds
+* mean ± standard deviation values were reported
 
-<img width="540" height="393" alt="c4b0fa50-989f-40ba-8d7b-241c60c2577d" src="https://github.com/user-attachments/assets/f6788b1f-8481-4eee-90e5-864642ae2429" />
+---
 
+## Final Cross-Validated Results
 
-Visualization of cognitively normal versus dementia patient counts.
+| Model    | Mean Full AUC | Mean Missing AUC | Mean Performance Drop |
+| -------- | ------------- | ---------------- | --------------------- |
+| Baseline | 0.980 ± 0.007 | 0.840 ± 0.034    | 0.140 ± 0.028         |
+| Robust   | 0.977 ± 0.008 | 0.863 ± 0.042    | 0.114 ± 0.037         |
 
-### Figure 2 — Model Comparison
+---
 
+# Biological and Clinical Interpretation of Results
 
-<img width="691" height="504" alt="bf5e8e98-4ced-4320-8cb3-33733ea93801" src="https://github.com/user-attachments/assets/f48c388a-cc02-4f9c-8051-bac6e8159b21" />
+## Key Finding
 
+The robustness-trained model maintained nearly identical full-data performance while substantially improving resilience under missing clinical information.
 
-Comparison of Logistic Regression, Random Forest, and Extra Trees AUC performance.
+This finding is clinically important because:
 
-### Figure 3 — ROC Curves
+* healthcare records are often incomplete
+* missing cognitive testing is common
+* MRI imaging may still be available when clinical testing is absent
+* deployable healthcare AI systems must tolerate imperfect data
 
+The robust model reduced performance degradation from:
 
-<img width="613" height="624" alt="fbe9e9d6-81a6-4021-9c8f-19eb1fff0575" src="https://github.com/user-attachments/assets/33d96e3f-2b01-462e-b29b-2ec4f7568deb" />
+```text
+0.140 → 0.114
+```
 
+representing a meaningful improvement in resilience.
 
-Receiver operating characteristic curves for all evaluated models.
+---
 
-### Figure 4 — Feature Importance
+# Missingness Robustness Experiments
 
+## Motivation
 
-<img width="435" height="393" alt="2da517ef-ff19-4ed5-9592-0b950e06e708" src="https://github.com/user-attachments/assets/9d282478-f533-439f-9a99-ca17e85e6f04" />
+The initial missing-modality experiment removed the entire clinical modality.
 
+However, real-world healthcare missingness often occurs gradually.
 
-Visualization of the most influential MRI and clinical predictors.
+Additional experiments therefore simulated increasing levels of missing clinical information.
 
-### Figure 5 — Missing Modality Performance
+---
 
+## Missingness Levels Tested
 
-<img width="776" height="682" alt="bfd1e70a-7050-4865-99f1-6ce300aa62f9" src="https://github.com/user-attachments/assets/498e56b3-58fe-483d-9be1-045f21a00d15" />
+* 10%
+* 30%
+* 50%
+* 70%
 
+Clinical variables were randomly masked to simulate Missing Completely At Random (MCAR) conditions.
 
-Comparison between full multimodal performance and missing-clinical-modality performance.
+---
 
-### Robustness Training Results
+# Missingness Experiment Results
 
-Comparison of baseline versus robustness-trained model performance under missing clinical data.
+| Missingness Level | Baseline AUC | Robust AUC | Baseline Performance Drop | Robust Performance Drop |
+| ----------------- | ------------ | ---------- | ------------------------- | ----------------------- |
+| 10%               | 0.919        | 0.987      | 0.058                     | 0.002                   |
+| 30%               | 0.879        | 0.988      | 0.097                     | 0.001                   |
+| 50%               | 0.820        | 0.980      | 0.156                     | 0.009                   |
+| 70%               | 0.816        | 0.948      | 0.161                     | 0.041                   |
 
-Original Full AUC:
-0.9765258215962441
+---
 
-Original Missing-Modality AUC:
-0.7711267605633803
+# Interpretation of Missingness Experiments
 
-Robust Model Full AUC:
-0.9800469483568075
+These experiments demonstrated:
 
-Robust Model Missing-Modality AUC:
-0.8661971830985916
+* baseline multimodal models degrade steadily as missingness increases
+* robustness-trained models remain substantially more stable
+* modality dropout training distributes predictive importance more effectively across modalities
 
-Original Performance Drop:
-0.20539906103286387
+The robust model maintained strong discriminative performance even under severe missingness conditions.
 
-Robust Performance Drop:
-0.11384976525821588
+---
 
+# Visualization — Cross-Validated Robustness Performance
 
-# Final Summary
+![Cross-Validated Robustness](ac47df43-b2af-4e7b-918b-83f1e4061af2.png)
 
-This project successfully developed a multimodal machine learning framework for Alzheimer’s disease classification while investigating how missing clinical information affects predictive performance. By combining structural MRI biomarkers with clinical and cognitive features, the study demonstrated strong multimodal classification capability while simultaneously revealing the vulnerability of such systems to incomplete data.
+## What This Visualization Shows
 
-Most importantly, the project showed that simple robustness strategies based on modality dropout training can substantially reduce performance degradation under missing clinical information. This finding highlights the importance of designing healthcare AI systems that are not only accurate under ideal conditions, but also resilient under the imperfect and incomplete data conditions that characterize real-world clinical environments.
+This figure compares:
 
-This project successfully built:
+* baseline multimodal performance
+* robustness-trained multimodal performance
+* performance under missing clinical data
 
-* A multimodal Alzheimer’s disease classifier
-* A modality robustness evaluation framework
-* A robustness-training strategy using modality dropout
+Key findings:
 
-The final findings demonstrated that:
+* both models achieved nearly identical full-data performance
+* the robust model maintained substantially stronger performance when clinical information disappeared
+* modality dropout training reduced performance degradation under missingness
 
-> Training models under simulated missingness substantially improves robustness to incomplete clinical data.
+This demonstrates that robustness training improved resilience without sacrificing baseline predictive capability.
 
-This creates a stronger foundation for real-world clinical machine learning deployment.
+---
+
+# Visualization — Missingness Robustness Curve
+
+![Missingness Robustness](018260a8-cdaa-4259-8bb3-f0ff88f8ae09.png)
+
+## What This Visualization Shows
+
+This figure evaluates how model performance changes as increasing amounts of clinical data become missing.
+
+The x-axis represents:
+
+* percentage of missing clinical information
+
+The y-axis represents:
+
+* ROC-AUC performance
+
+Key findings:
+
+* the baseline model degrades steadily as missingness increases
+* the robustness-trained model remains substantially more stable
+* the robustness gap widens as missingness becomes more severe
+
+This demonstrates that modality dropout training improves resilience under increasingly incomplete healthcare data conditions.
+
+---
+
+# Additional Baseline Experiments
+
+## Motivation
+
+Additional baselines were evaluated to determine:
+
+* how predictive each modality is independently
+* whether multimodal learning provides meaningful benefit
+
+---
+
+# Modality Comparison Results
+
+| Model Type    | ROC-AUC | Feature Count |
+| ------------- | ------- | ------------- |
+| Clinical Only | 0.969   | 6             |
+| MRI Only      | 0.825   | 30            |
+| Multimodal    | 0.977   | 36            |
+
+---
+
+# Interpretation of Modality Results
+
+## Clinical-Only Model
+
+Clinical variables alone produced very strong predictive performance.
+
+This suggests:
+
+* cognitive testing contains highly informative behavioral disease signals
+* memory impairment strongly differentiates dementia patients
+
+---
+
+## MRI-Only Model
+
+MRI biomarkers alone achieved meaningful but weaker predictive performance.
+
+This indicates:
+
+* structural neurodegeneration remains highly informative
+* MRI captures complementary anatomical information
+* behavioral cognitive testing remains more directly diagnostic
+
+---
+
+## Multimodal Model
+
+Combining MRI and clinical information produced the strongest overall performance.
+
+This demonstrates:
+
+* complementary integration of behavioral and anatomical disease signals
+* multimodal learning improves overall discriminative capability
+
+---
+
+# Healthcare Evaluation Metrics
+
+## Final Multimodal Performance Metrics
+
+| Metric      | Value |
+| ----------- | ----- |
+| Accuracy    | 0.952 |
+| Precision   | 0.786 |
+| Recall      | 0.917 |
+| F1-Score    | 0.846 |
+| Sensitivity | 0.917 |
+| Specificity | 0.958 |
+| ROC-AUC     | 0.977 |
+
+---
+
+# Clinical Interpretation of Metrics
+
+## Accuracy — 95.2%
+
+The model correctly classified approximately 95% of patients overall.
+
+---
+
+## Recall / Sensitivity — 91.7%
+
+Sensitivity measures:
+
+> how effectively dementia patients are identified.
+
+This is especially important clinically because missed dementia cases may delay diagnosis and treatment.
+
+---
+
+## Specificity — 95.8%
+
+Specificity measures:
+
+> how effectively cognitively normal patients are correctly identified.
+
+High specificity reduces false dementia diagnoses.
+
+---
+
+## Precision — 78.6%
+
+Precision measures:
+
+> how many predicted dementia classifications were actually correct.
+
+---
+
+## F1-Score — 84.6%
+
+The F1-score balances:
+
+* precision
+* recall
+
+providing a robust summary metric under class imbalance.
+
+---
+
+## ROC-AUC — 0.977
+
+ROC-AUC measures:
+
+> the model’s ability to separate cognitively normal and dementia patients across all classification thresholds.
+
+An ROC-AUC of 0.977 represents extremely strong discriminative capability.
+
+---
+
+# Confusion Matrix Interpretation
+
+| Outcome         | Count |
+| --------------- | ----- |
+| True Negatives  | 68    |
+| False Positives | 3     |
+| False Negatives | 1     |
+| True Positives  | 11    |
+
+---
+
+# Clinical Interpretation of Confusion Matrix
+
+## True Positives — 11
+
+The model correctly identified 11 dementia patients.
+
+---
+
+## False Negatives — 1
+
+Only one dementia patient was missed.
+
+This is clinically important because minimizing missed diagnoses is critical in healthcare AI systems.
+
+---
+
+## False Positives — 3
+
+Only three cognitively normal patients were incorrectly classified as dementia.
+
+---
+
+# Visualization — Clinical Feature Correlation Heatmap
+
+![Clinical Correlation Heatmap](45d81471-d89e-4335-9d20-54ae3193a6df.png)
+
+## What This Visualization Shows
+
+This heatmap visualizes correlations between clinical variables.
+
+Positive correlations indicate:
+
+* variables that increase together
+
+Negative correlations indicate:
+
+* variables that move in opposite directions
+
+Important observations include:
+
+* delayed verbal recall and immediate verbal recall are moderately related
+* trail-making performance exhibits inverse relationships with memory variables
+* age demonstrates relationships with cognitive performance decline
+
+This visualization helps validate that the clinical modality contains biologically meaningful cognitive relationships relevant to Alzheimer’s disease.
+
+---
+
+# Visualization — Confusion Matrix
+
+![Confusion Matrix](8159f917-e453-4555-9331-1a673f19504b.png)
+
+## What This Visualization Shows
+
+The confusion matrix summarizes classification outcomes.
+
+Rows represent:
+
+* actual diagnoses
+
+Columns represent:
+
+* predicted diagnoses
+
+Key findings:
+
+* 68 cognitively normal patients were correctly identified
+* 11 dementia patients were correctly identified
+* only 1 dementia patient was missed
+* only 3 cognitively normal patients were incorrectly classified as dementia
+
+This demonstrates strong clinical sensitivity and specificity.
+
+The very low false negative count is especially important because missed dementia diagnoses can delay treatment and intervention.
+
+---
+
+# Modality Dropout Ablation Study
+
+## Motivation
+
+The ablation study investigated:
+
+> how different modality dropout rates influence robustness.
+
+This experiment tested whether increasing dropout improves resilience to missing data.
+
+---
+
+# Dropout Levels Tested
+
+* 0%
+* 10%
+* 30%
+* 50%
+
+---
+
+# Ablation Study Results
+
+| Dropout Rate | Full AUC | Missing AUC | Performance Drop |
+| ------------ | -------- | ----------- | ---------------- |
+| 0%           | 0.977    | 0.771       | 0.205            |
+| 10%          | 0.977    | 0.817       | 0.160            |
+| 30%          | 0.975    | 0.792       | 0.183            |
+| 50%          | 0.969    | 0.827       | 0.142            |
+
+---
+
+# Interpretation of Ablation Study
+
+These results demonstrated:
+
+* no dropout creates fragile multimodal systems
+* increasing modality dropout improves robustness
+* higher dropout introduces a tradeoff between:
+
+  * full-data optimization
+  * missing-data resilience
+
+The 50% dropout model produced the strongest robustness under missing clinical information.
+
+---
+
+# Visualization — Clinical vs MRI vs Multimodal Performance
+
+![Modality Comparison](1d7038c4-e144-4387-a65e-939802611724.png)
+
+## What This Visualization Shows
+
+This figure compares the predictive strength of:
+
+* clinical features alone
+* MRI biomarkers alone
+* multimodal integration
+
+Key findings:
+
+* clinical features were highly predictive
+* MRI biomarkers alone remained meaningfully predictive
+* combining both modalities produced the strongest overall performance
+
+This demonstrates that multimodal learning provides complementary biological information.
+
+---
+
+# Visualization — Effect of Modality Dropout on Robustness
+
+![Dropout Robustness](5730cf3c-728c-448b-bd59-6a2e9375319e.png)
+
+## What This Visualization Shows
+
+This figure evaluates how increasing modality dropout during training affects robustness under missing clinical data.
+
+Key findings:
+
+* no dropout produced the weakest robustness
+* moderate dropout substantially improved resilience
+* robustness improved as the model learned to rely less heavily on clinical variables
+
+The strongest missing-modality performance occurred at higher dropout levels.
+
+---
+
+# Visualization — Effect of Dropout on Performance Degradation
+
+![Dropout Performance Degradation](2e36debb-0433-4a33-8116-99bc625b9f17.png)
+
+## What This Visualization Shows
+
+This figure visualizes:
+
+* how much performance is lost after clinical information disappears
+
+Lower values indicate:
+
+* stronger robustness
+* less dependence on clinical variables
+
+Key findings:
+
+* no dropout produced the largest degradation
+* modality dropout substantially reduced degradation
+* robustness training distributed predictive importance more effectively across modalities
+
+This figure demonstrates the central contribution of the project:
+
+> modality dropout training improves resilience to incomplete healthcare data.
+
+---
+
+# Key Contributions
+
+This project successfully developed:
+
+* a multimodal Alzheimer’s disease classification framework
+* a missing-modality evaluation pipeline
+* a modality dropout robustness-training strategy
+* cross-validated robustness experiments
+* clinically interpretable multimodal analysis
+
+---
+
+# Main Scientific Findings
+
+## 1. Multimodal Systems Are Vulnerable to Missing Clinical Information
+
+Standard multimodal classifiers experienced substantial degradation when clinical variables disappeared.
+
+---
+
+## 2. Modality Dropout Significantly Improves Robustness
+
+Robustness-trained models maintained substantially stronger performance under missing data.
+
+---
+
+## 3. MRI Biomarkers Provide Complementary Anatomical Information
+
+MRI-only models remained predictive, demonstrating that structural neurodegeneration contains meaningful disease signal.
+
+---
+
+## 4. Robustness and Peak Accuracy Form a Tradeoff
+
+Increasing dropout improves resilience but may slightly reduce optimal full-data performance.
+
+---
+
+# Clinical Importance
+
+This project shifts the focus from:
+
+> maximizing ideal-condition accuracy
+
+to:
+
+> designing clinically deployable healthcare AI systems.
+
+Real healthcare environments contain:
+
+* incomplete patient records
+* inconsistent testing
+* partial medical histories
+* missing modalities
+
+A model that remains stable under these conditions may ultimately be more clinically valuable than a model optimized only for ideal datasets.
+
+---
+
+# Limitations
+
+Several limitations remain:
+
+* ADNI may not fully represent real-world patient populations
+* the study focused only on binary CN vs DEM classification
+* synthetic missingness may not perfectly reflect clinical workflows
+* external validation datasets were not yet incorporated
+* MRI biomarkers were reduced using variance filtering rather than domain-specific selection
+
+---
+
+# Future Work
+
+Potential future directions include:
+
+* external validation on OASIS or NACC datasets
+* longitudinal disease progression modeling
+* advanced multimodal fusion architectures
+* transformer-based multimodal systems
+* clinically realistic Missing At Random (MAR) simulations
+* fairness and demographic robustness analysis
+
+---
+
+# Technologies Used
+
+## Languages
+
+* Python
+* R
+
+## Machine Learning Libraries
+
+* scikit-learn
+* pandas
+* numpy
+* matplotlib
+* seaborn
+
+## Models
+
+* Logistic Regression
+* Random Forest
+* Extra Trees
+
+## Statistical Techniques
+
+* Stratified Cross-Validation
+* Median Imputation
+* Standardization
+* Variance Filtering
+* ROC-AUC Evaluation
+* Modality Dropout Training
+
+---
+
+# Repository Structure
+
+```text
+/data
+/notebooks
+/results
+/figures
+README.md
+requirements.txt
+```
+
+---
+
+# Final Conclusion
+
+This project demonstrates that multimodal Alzheimer’s disease classifiers can achieve strong predictive performance while simultaneously exposing a major translational challenge:
+
+> multimodal healthcare AI systems become vulnerable when patient information is incomplete.
+
+Through modality dropout training, this work showed that:
+
+* robustness to missing clinical information can be substantially improved
+* resilience can increase without major loss in baseline accuracy
+* clinically deployable machine learning systems should prioritize robustness in addition to predictive performance
+
+The final framework therefore contributes not only to Alzheimer’s disease classification, but also to the broader problem of robust healthcare AI deployment under incomplete real-world data conditions.
+
