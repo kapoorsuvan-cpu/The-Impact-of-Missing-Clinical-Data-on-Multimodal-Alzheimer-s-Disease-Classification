@@ -1,4 +1,4 @@
-setwd("/Users/suvankapoor/Documents/Multimodal Alzheimer's Research")
+setwd("[pathway]")
 
 # load the file
 obj_name <- load("ADNIMERGE2/data/ADSL.rda")
@@ -14,7 +14,7 @@ write.csv(df, "ADSL.csv", row.names = FALSE)
 # confirm it exists
 print(list.files())
 
-setwd("/Users/suvankapoor/Documents/Multimodal Alzheimer's Research")
+setwd("[pathway]")
 
 # load the file
 obj_name <- load("ADNIMERGE2/data/UCSFFSX6.rda")
