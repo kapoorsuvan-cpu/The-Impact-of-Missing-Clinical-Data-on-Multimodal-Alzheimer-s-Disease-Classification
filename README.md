@@ -289,9 +289,9 @@ Logistic Regression achieved the best balance of:
 
 ---
 
-# Visualization — Class Distribution
+# Visualization: Class Distribution
 
-![Class Distribution](5b1fa9d8-8385-4b1e-ad50-2d23ff8771a0.png)
+<img width="540" height="393" alt="image" src="https://github.com/user-attachments/assets/0732d553-5d01-418e-b6fa-2390283bc856" />
 
 ## What This Visualization Shows
 
@@ -315,9 +315,9 @@ The class imbalance also explains why stratified train/test splitting and balanc
 
 ---
 
-# Visualization — Model Comparison
+# Visualization: Model Comparison
 
-![Model Comparison](32b64c13-4873-490b-8b4a-2bfbfb6dad65.png)
+<img width="691" height="504" alt="image" src="https://github.com/user-attachments/assets/07e6676b-75bc-4c11-a09a-de9b2cd3d6e8" />
 
 ## What This Visualization Shows
 
@@ -341,9 +341,9 @@ it was selected as the primary model for robustness experiments.
 
 ---
 
-# Visualization — ROC Curves
+# Visualization: ROC Curves
 
-![ROC Curves](b6ae9b90-5297-4571-a1b5-68fe00a43bb3.png)
+<img width="613" height="624" alt="image" src="https://github.com/user-attachments/assets/943fa584-2639-4d34-93f5-02d03cf4413c" />
 
 ## What This Visualization Shows
 
@@ -543,9 +543,9 @@ The robust model maintained strong discriminative performance even under severe 
 
 ---
 
-# Visualization — Cross-Validated Robustness Performance
+# Visualization: Cross-Validated Robustness Performance
 
-![Cross-Validated Robustness](ac47df43-b2af-4e7b-918b-83f1e4061af2.png)
+<img width="768" height="499" alt="image" src="https://github.com/user-attachments/assets/a525cb4d-cb6c-4434-878d-528e3005145e" />
 
 ## What This Visualization Shows
 
@@ -565,9 +565,9 @@ This demonstrates that robustness training improved resilience without sacrifici
 
 ---
 
-# Visualization — Missingness Robustness Curve
+# Visualization: Missingness Robustness Curve
 
-![Missingness Robustness](018260a8-cdaa-4259-8bb3-f0ff88f8ae09.png)
+<img width="700" height="470" alt="image" src="https://github.com/user-attachments/assets/ee7ec3d2-67cb-406c-ab9f-0e3d677255d0" />
 
 ## What This Visualization Shows
 
@@ -754,9 +754,9 @@ Only three cognitively normal patients were incorrectly classified as dementia.
 
 ---
 
-# Visualization — Clinical Feature Correlation Heatmap
+# Visualization: Clinical Feature Correlation Heatmap
 
-![Clinical Correlation Heatmap](45d81471-d89e-4335-9d20-54ae3193a6df.png)
+<img width="776" height="682" alt="image" src="https://github.com/user-attachments/assets/784d28ef-df85-4055-b47d-81c889b374ff" />
 
 ## What This Visualization Shows
 
@@ -780,9 +780,9 @@ This visualization helps validate that the clinical modality contains biological
 
 ---
 
-# Visualization — Confusion Matrix
+# Visualization: Confusion Matrix
 
-![Confusion Matrix](8159f917-e453-4555-9331-1a673f19504b.png)
+<img width="435" height="393" alt="image" src="https://github.com/user-attachments/assets/90c9534d-9ce4-434e-a6de-6e6fcdc1e036" />
 
 ## What This Visualization Shows
 
@@ -856,9 +856,9 @@ The 50% dropout model produced the strongest robustness under missing clinical i
 
 ---
 
-# Visualization — Clinical vs MRI vs Multimodal Performance
+# Visualization: Clinical vs MRI vs Multimodal Performance
 
-![Modality Comparison](1d7038c4-e144-4387-a65e-939802611724.png)
+<img width="613" height="470" alt="image" src="https://github.com/user-attachments/assets/ac27973c-8ce7-4aa6-9bdb-ed715850e039" />
 
 ## What This Visualization Shows
 
@@ -878,9 +878,9 @@ This demonstrates that multimodal learning provides complementary biological inf
 
 ---
 
-# Visualization — Effect of Modality Dropout on Robustness
+# Visualization: Effect of Modality Dropout on Robustness
 
-![Dropout Robustness](5730cf3c-728c-448b-bd59-6a2e9375319e.png)
+<img width="700" height="470" alt="image" src="https://github.com/user-attachments/assets/abe4bba7-6199-4dd0-bab6-0b63ea0de61b" />
 
 ## What This Visualization Shows
 
@@ -896,9 +896,9 @@ The strongest missing-modality performance occurred at higher dropout levels.
 
 ---
 
-# Visualization — Effect of Dropout on Performance Degradation
+# Visualization: Effect of Dropout on Performance Degradation
 
-![Dropout Performance Degradation](2e36debb-0433-4a33-8116-99bc625b9f17.png)
+<img width="700" height="470" alt="image" src="https://github.com/user-attachments/assets/41810060-b992-43dd-adff-2054ee721952" />
 
 ## What This Visualization Shows
 
