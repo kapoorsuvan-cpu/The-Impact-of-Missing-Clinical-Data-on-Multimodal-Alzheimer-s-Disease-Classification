@@ -255,7 +255,7 @@ Comparison of Logistic Regression, Random Forest, and Extra Trees AUC performanc
 ### Figure 3 — ROC Curves
 
 
-<img width="540" height="393" alt="c4b0fa50-989f-40ba-8d7b-241c60c2577d" src="https://github.com/user-attachments/assets/f6788b1f-8481-4eee-90e5-864642ae2429" />
+<img width="613" height="624" alt="fbe9e9d6-81a6-4021-9c8f-19eb1fff0575" src="https://github.com/user-attachments/assets/33d96e3f-2b01-462e-b29b-2ec4f7568deb" />
 
 
 Receiver operating characteristic curves for all evaluated models.
@@ -296,7 +296,7 @@ Original Performance Drop:
 0.20539906103286387
 
 Robust Performance Drop:
-0.11384976525821588<img width="613" height="624" alt="fbe9e9d6-81a6-4021-9c8f-19eb1fff0575" src="https://github.com/user-attachments/assets/33d96e3f-2b01-462e-b29b-2ec4f7568deb" />
+0.11384976525821588
 
 
 # Final Summary
