@@ -152,7 +152,7 @@ The datasets were converted into CSV format using R.
 ### Clinical Dataset Conversion
 
 ```r
-setwd("/Users/suvankapoor/Documents/Multimodal Alzheimer's Research")
+setwd("[replace with pathway]")
 
 obj_name <- load("ADNIMERGE2/data/ADSL.rda")
 
@@ -164,7 +164,7 @@ write.csv(df, "ADSL.csv", row.names = FALSE)
 ### MRI Dataset Conversion
 
 ```r
-setwd("/Users/suvankapoor/Documents/Multimodal Alzheimer's Research")
+setwd("[replace with pathway]")
 
 obj_name <- load("ADNIMERGE2/data/UCSFFSX6.rda")
 
