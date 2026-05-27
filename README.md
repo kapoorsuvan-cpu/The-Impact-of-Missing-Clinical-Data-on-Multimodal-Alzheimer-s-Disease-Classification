@@ -1042,12 +1042,18 @@ Potential future directions include:
 # Repository Structure
 
 ```text
-/data
-/notebooks
-/results
-/figures
-README.md
-requirements.txt
+project/
+│
+├── ADSL.csv
+├── UCSFFSX6.csv
+├── Parse R Files.r
+├── README.md
+├── requirements.txt
+├── multimodal_robustness.ipynb
+│
+├── figures/
+├── results/
+└── tables/
 ```
 
 ---
