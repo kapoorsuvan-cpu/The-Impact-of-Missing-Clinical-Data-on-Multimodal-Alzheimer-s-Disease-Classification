@@ -643,16 +643,6 @@ if page == "Home":
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
-    section_header("Modeling Approach")
-
-    cols = st.columns(3)
-
-    models = [
-        ("📈", "Logistic Regression", "Highly interpretable with strong calibration."),
-        ("🌲", "Random Forest", "Robust ensemble learning for nonlinear relationships."),
-        ("⚡", "Extra Trees", "Variance reduction with strong high-dimensional modeling.")
-    ]
-
     for col, model in zip(cols, models):
         with col:
             glass_card(model[0], model[1], model[2])
