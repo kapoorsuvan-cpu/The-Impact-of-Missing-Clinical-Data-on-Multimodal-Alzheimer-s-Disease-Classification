@@ -80,77 +80,17 @@ st.markdown("""
 }
 
 .context-box {
-    background-color: #f8fafc;
-    border-left: 6px solid #2563eb;
+    background: linear-gradient(135deg, #111827 0%, #1e293b 100%);
+    border-left: 6px solid #3b82f6;
     padding: 1.5rem;
     border-radius: 12px;
     margin-bottom: 1.5rem;
+    color: #f8fafc;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
 }
 
 </style>
 """, unsafe_allow_html=True)
-
-# =========================================================
-# HERO
-# =========================================================
-
-st.markdown("""
-<div class="hero">
-
-<div class="hero-title">
-Multimodal Alzheimer's Disease Classification Under Missing Clinical Data
-</div>
-
-<div class="hero-text">
-This dashboard demonstrates the machine learning pipeline, robustness experiments, and research findings developed for a multimodal Alzheimer's disease classification project using the ADNI dataset.
-<br><br>
-The project investigates a central translational healthcare AI problem: modern multimodal models often assume perfectly complete patient records, but real clinical environments frequently contain incomplete cognitive testing, unavailable imaging studies, and fragmented electronic health records.
-<br><br>
-Rather than focusing only on benchmark accuracy, this research evaluates how multimodal systems behave under missing clinical information and explores whether robustness-oriented training strategies can improve resilience under realistic deployment conditions.
-</div>
-
-</div>
-""", unsafe_allow_html=True)
-
-# =========================================================
-# METRICS
-# =========================================================
-
-col1, col2, col3, col4 = st.columns(4)
-
-with col1:
-    st.markdown("""
-    <div class="metric-box">
-        <div class="metric-title">Best ROC-AUC</div>
-        <div class="metric-value">0.977</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col2:
-    st.markdown("""
-    <div class="metric-box">
-        <div class="metric-title">Missing Modality AUC</div>
-        <div class="metric-value">0.771</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col3:
-    st.markdown("""
-    <div class="metric-box">
-        <div class="metric-title">Robust Model AUC</div>
-        <div class="metric-value">0.863</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col4:
-    st.markdown("""
-    <div class="metric-box">
-        <div class="metric-title">Core Contribution</div>
-        <div class="metric-value">Robust Healthcare AI</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-st.markdown("---")
 
 # =========================================================
 # SIDEBAR
@@ -175,10 +115,64 @@ section = st.sidebar.radio(
 )
 
 # =========================================================
-# SECTION 1
+# HERO ONLY ON FIRST TAB
 # =========================================================
 
 if section == "1. Research Motivation":
+
+    st.markdown("""
+    <div class="hero">
+
+    <div class="hero-title">
+    Multimodal Alzheimer's Disease Classification Under Missing Clinical Data
+    </div>
+
+    <div class="hero-text">
+    This dashboard demonstrates the machine learning pipeline, robustness experiments, and research findings developed for a multimodal Alzheimer's disease classification project using the ADNI dataset.
+    <br><br>
+    The project investigates a central translational healthcare AI problem: modern multimodal models often assume perfectly complete patient records, but real clinical environments frequently contain incomplete cognitive testing, unavailable imaging studies, and fragmented electronic health records.
+    <br><br>
+    Rather than focusing only on benchmark accuracy, this research evaluates how multimodal systems behave under missing clinical information and explores whether robustness-oriented training strategies can improve resilience under realistic deployment conditions.
+    </div>
+
+    </div>
+    """, unsafe_allow_html=True)
+
+    col1, col2, col3, col4 = st.columns(4)
+
+    with col1:
+        st.markdown("""
+        <div class="metric-box">
+            <div class="metric-title">Best ROC-AUC</div>
+            <div class="metric-value">0.977</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col2:
+        st.markdown("""
+        <div class="metric-box">
+            <div class="metric-title">Missing Modality AUC</div>
+            <div class="metric-value">0.771</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col3:
+        st.markdown("""
+        <div class="metric-box">
+            <div class="metric-title">Robust Model AUC</div>
+            <div class="metric-value">0.863</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col4:
+        st.markdown("""
+        <div class="metric-box">
+            <div class="metric-title">Core Contribution</div>
+            <div class="metric-value">Robust Healthcare AI</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("---")
 
     st.markdown('<div class="section-title">Research Motivation</div>', unsafe_allow_html=True)
 
@@ -287,10 +281,6 @@ elif section == "4. MRI Biomarker Processing":
     - Applied feature standardization
     """)
 
-    st.success("""
-    MRI biomarkers provided complementary anatomical information beyond cognitive testing and remained predictive even when clinical variables became unavailable.
-    """)
-
 # =========================================================
 # SECTION 5
 # =========================================================
@@ -319,10 +309,6 @@ elif section == "5. Machine Learning Pipeline":
     })
 
     st.dataframe(pipeline_df, use_container_width=True)
-
-    st.info("""
-    Logistic Regression ultimately emerged as the strongest and most stable model after multimodal integration and preprocessing.
-    """)
 
 # =========================================================
 # SECTION 6
@@ -357,10 +343,6 @@ elif section == "6. Baseline Model Results":
 
     st.plotly_chart(fig, use_container_width=True)
 
-    st.write("""
-    The baseline multimodal model achieved strong discriminative capability, with Logistic Regression producing the strongest overall performance.
-    """)
-
 # =========================================================
 # SECTION 7
 # =========================================================
@@ -368,10 +350,6 @@ elif section == "6. Baseline Model Results":
 elif section == "7. Missing-Modality Experiment":
 
     st.markdown('<div class="section-title">Missing-Modality Experiment</div>', unsafe_allow_html=True)
-
-    st.write("""
-    To simulate realistic healthcare deployment conditions, all clinical variables were removed from the test data while MRI biomarkers remained available.
-    """)
 
     comparison_df = pd.DataFrame({
         "Condition": [
@@ -396,10 +374,6 @@ elif section == "7. Missing-Modality Experiment":
 
     st.plotly_chart(fig, use_container_width=True)
 
-    st.error("""
-    Removing clinical information caused a substantial performance decline, demonstrating that standard multimodal systems can become highly dependent on cognitive features.
-    """)
-
 # =========================================================
 # SECTION 8
 # =========================================================
@@ -407,18 +381,6 @@ elif section == "7. Missing-Modality Experiment":
 elif section == "8. Robustness Training":
 
     st.markdown('<div class="section-title">Robustness Training Through Modality Dropout</div>', unsafe_allow_html=True)
-
-    st.write("""
-    To improve resilience under incomplete healthcare data conditions, modality dropout training was introduced.
-    """)
-
-    st.markdown("""
-    ### Training Strategy
-    During training:
-    - subsets of patients had clinical variables randomly removed,
-    - MRI biomarkers remained available,
-    - and the model was forced to learn distributed multimodal representations instead of over-relying on clinical information.
-    """)
 
     robust_df = pd.DataFrame({
         "Model": ["Baseline", "Robust"],
@@ -485,10 +447,6 @@ elif section == "9. Missingness Analysis":
 
     st.plotly_chart(fig, use_container_width=True)
 
-    st.success("""
-    The robustness-trained model remained substantially more stable as missingness severity increased, demonstrating improved resilience under incomplete healthcare conditions.
-    """)
-
 # =========================================================
 # SECTION 10
 # =========================================================
@@ -513,8 +471,4 @@ elif section == "10. Key Findings & Future Work":
     - Temporal patient-state modeling
     - Clinically realistic missingness simulations
     - Fairness and demographic robustness analysis
-    """)
-
-    st.info("""
-    The long-term goal of this research is to help shift healthcare AI from benchmark-oriented evaluation toward clinically deployable systems capable of operating under imperfect real-world conditions.
     """)
