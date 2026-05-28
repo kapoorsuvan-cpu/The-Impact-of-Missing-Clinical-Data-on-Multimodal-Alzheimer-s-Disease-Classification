@@ -8,6 +8,17 @@ import os
 # =========================
 # PAGE CONFIG
 # =========================
+CHART_COLORS = {
+    "primary": "#60A5FA",
+    "secondary": "#93C5FD",
+    "tertiary": "#BFDBFE",
+    "slate": "#64748B",
+    "muted": "#94A3B8",
+    "border": "#374151",
+    "bg": "#0B0F19",
+    "card": "#111827",
+    "text": "#F9FAFB"
+}
 
 st.set_page_config(
     page_title="Alzheimer's Multimodal AI Dashboard",
