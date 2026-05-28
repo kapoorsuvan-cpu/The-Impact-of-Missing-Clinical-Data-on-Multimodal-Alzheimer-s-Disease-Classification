@@ -639,13 +639,6 @@ if page == "Home":
     print("Missing Modality AUC:")
     print(missing_auc)
     """, language="python")
-            
-
-    st.markdown("<hr>", unsafe_allow_html=True)
-
-    for col, model in zip(cols, models):
-        with col:
-            glass_card(model[0], model[1], model[2])
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
