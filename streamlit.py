@@ -935,15 +935,7 @@ elif page == "Findings":
     st.dataframe(modality, use_container_width=True)
     st.dataframe(ablation, use_container_width=True)
 
-    st.markdown("""
-    ### Interpretation
-    
-    The correlation analysis revealed strong relationships between cognitive impairment metrics, including MMSE and CDR scores, which are clinically associated with Alzheimer’s disease progression and memory decline.
-    
-    Negative correlations between cognitive performance and disease severity aligned with established neurological findings and validated the biological plausibility of the feature space used by the models.
-    
-    These relationships helped explain why cognitive assessments contributed such strong predictive signal within the multimodal classification framework.
-    """)
+
     st.markdown("<hr>", unsafe_allow_html=True)
 
     section_header("Feature Relationships")
