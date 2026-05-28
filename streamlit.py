@@ -386,9 +386,260 @@ if page == "Home":
         with st.expander(f"{idx+1}. {step}"):
 
             st.write(f"Pipeline Stage: {step}")
+ # =====================================================
+        # 1. RDA CONVERSION
+        # =====================================================
 
-            if step == "Imputation":
+            if step == "R .rda Conversion":
+    
+                st.write("""
+    Clinical and biomarker data were loaded, filtered, and converted into structured machine learning datasets.
+    """)
+    
                 st.code("""
+    clinical_full = pd.read_csv("ADSL.csv")
+    
+    clinical_full = clinical_full[
+        clinical_full["DX"].isin(["CN", "DEM"])
+    ].copy()
+    
+    clinical_full["LABEL"] = clinical_full["DX"].map({
+        "CN": 0,
+        "DEM": 1
+    })
+    
+    clinical = clinical_full[[
+        "SUBJID",
+        "AGE",
+        "SEX",
+        "EDUC",
+        "MMSCORE",
+        "MOCA",
+        "CDRSB",
+        "FAQTOTAL",
+        "RAVLTFG",
+        "RAVLTIMM",
+        "TRABSCOR",
+        "LABEL"
+    ]].copy()
+    """, language="python")
+    
+            # =====================================================
+            # 2. PREPROCESSING
+            # =====================================================
+    
+            elif step == "Preprocessing":
+    
+                st.write("""
+    Raw clinical variables were cleaned, filtered, standardized, and prepared for downstream multimodal learning.
+    """)
+    
+                st.code("""
+    clinical = clinical.rename(columns={
+        "SUBJID": "RID"
+    })
+    
+    clinical["SEX"] = clinical["SEX"].map({
+        "M": 0,
+        "F": 1
+    })
+    
+    clinical = clinical.dropna(
+        subset=["LABEL"]
+    )
+    """, language="python")
+    
+            # =====================================================
+            # 3. FEATURE ENGINEERING
+            # =====================================================
+    
+            elif step == "Feature Engineering":
+    
+                st.write("""
+    Clinical cognitive assessments and MRI biomarkers were merged into unified multimodal feature representations.
+    """)
+    
+                st.code("""
+    clinical_features = [
+        "AGE",
+        "SEX",
+        "EDUC",
+        "MMSCORE",
+        "MOCA",
+        "CDRSB",
+        "FAQTOTAL",
+        "RAVLTFG",
+        "RAVLTIMM",
+        "TRABSCOR"
+    ]
+    
+    multimodal_features = (
+        clinical_features
+        + top_mri_features
+    )
+    """, language="python")
+    
+            # =====================================================
+            # 4. MRI FILTERING
+            # =====================================================
+    
+            elif step == "MRI Filtering":
+    
+                st.write("""
+    Top MRI biomarkers were selected and filtered to improve signal quality and reduce irrelevant neuroimaging variance.
+    """)
+    
+                st.code("""
+    mri_only_features = top_mri_features
+    
+    multimodal_features = (
+        clinical_features
+        + top_mri_features
+    )
+    """, language="python")
+    
+            # =====================================================
+            # 5. IMPUTATION
+            # =====================================================
+    
+            elif step == "Imputation":
+    
+                st.write("""
+    Missing values were imputed using median imputation to preserve robustness while minimizing distributional distortion.
+    """)
+    
+                st.code("""
+    from sklearn.impute import SimpleImputer
+    
+    imputer = SimpleImputer(
+        strategy="median"
+    )
+    
+    X_train = imputer.fit_transform(
+        X_train
+    )
+    
+    X_test = imputer.transform(
+        X_test
+    )
+    """, language="python")
+    
+            # =====================================================
+            # 6. SCALING
+            # =====================================================
+    
+            elif step == "Scaling":
+    
+                st.write("""
+    Features were standardized using z-score normalization for stable optimization and comparable feature magnitudes.
+    """)
+    
+                st.code("""
+    from sklearn.preprocessing import StandardScaler
+    
+    scaler = StandardScaler()
+    
+    X_train_scaled = scaler.fit_transform(
+        X_train
+    )
+    
+    X_test_scaled = scaler.transform(
+        X_test
+    )
+    """, language="python")
+    
+            # =====================================================
+            # 7. TRAIN TEST SPLIT
+            # =====================================================
+    
+            elif step == "Train/Test Split":
+    
+                st.write("""
+    Data was stratified into training and testing partitions while preserving diagnostic class balance.
+    """)
+    
+                st.code("""
+    from sklearn.model_selection import train_test_split
+    
+    X_train, X_test, y_train, y_test = train_test_split(
+        X,
+        y,
+        test_size=0.2,
+        stratify=y,
+        random_state=42
+    )
+    """, language="python")
+    
+            # =====================================================
+            # 8. MODEL TRAINING
+            # =====================================================
+    
+            elif step == "Model Training":
+    
+                st.write("""
+    Multiple machine learning architectures were trained and benchmarked across multimodal feature representations.
+    """)
+    
+                st.code("""
+    from sklearn.linear_model import LogisticRegression
+    
+    model = LogisticRegression(
+        class_weight="balanced",
+        max_iter=1000
+    )
+    
+    model.fit(
+        X_train_scaled,
+        y_train
+    )
+    """, language="python")
+    
+            # =====================================================
+            # 9. ROBUSTNESS EXPERIMENTS
+            # =====================================================
+    
+            elif step == "Robustness Experiments":
+    
+                st.write("""
+    Random clinical modality dropout was introduced during training to simulate real-world incomplete healthcare records.
+    """)
+    
+                st.code("""
+    mask = np.random.rand(
+        len(X_train_robust)
+    ) < 0.3
+    
+    X_train_robust.loc[
+        mask,
+        clinical_features
+    ] = 0
+    """, language="python")
+    
+            # =====================================================
+            # 10. EVALUATION
+            # =====================================================
+    
+            elif step == "Evaluation":
+    
+                st.write("""
+    Models were evaluated using ROC-AUC, classification metrics, robustness degradation, and missing modality experiments.
+    """)
+    
+                st.code("""
+    from sklearn.metrics import roc_auc_score
+    
+    missing_auc = roc_auc_score(
+        y_test,
+        missing_probs
+    )
+    
+    print("Baseline AUC:")
+    print(results_df.iloc[0]["AUC"])
+    
+    print("Missing Modality AUC:")
+    print(missing_auc)
+    """, language="python")
+            
 from sklearn.impute import SimpleImputer
 
 imputer = SimpleImputer(strategy="median")
