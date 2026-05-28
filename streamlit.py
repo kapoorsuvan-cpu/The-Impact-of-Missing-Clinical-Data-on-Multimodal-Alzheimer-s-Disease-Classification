@@ -52,12 +52,21 @@ section[data-testid="stSidebar"] {
 }
 
 .hero-title {
-    font-size: 3rem;
-    font-weight: 800;
-    color: white;
-    line-height: 1.1;
+    font-size: 5rem;
+    font-weight: 900;
+    color: #F9FAFB;
+    line-height: 1.02;
+    letter-spacing: -3px;
+    max-width: 1500px;
 }
 
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: #D1D5DB;
+    margin-top: 1.5rem;
+    line-height: 1.8;
+    max-width: 1100px;
+}
 .hero-subtitle {
     font-size: 1.2rem;
     color: #D1D5DB;
@@ -256,12 +265,16 @@ if page == "Home":
     st.markdown("""
     <div class='hero'>
         <div class='hero-title'>
-        Improving Robustness of Multimodal Alzheimer’s Disease Classification Under Missing Clinical Data
+            Improving Robustness of Multimodal<br>
+            Alzheimer’s Disease Classification Under<br>
+            Missing Clinical Data
         </div>
-
-        <div class='hero-subtitle'>
-        This research investigates how multimodal machine learning systems for Alzheimer’s disease diagnosis behave under incomplete clinical information and missing modalities.
-        </div>
+    
+        <p class='hero-subtitle'>
+            This research investigates how multimodal machine learning systems
+            for Alzheimer’s disease diagnosis behave under incomplete clinical
+            information and missing modalities.
+        </p>
     </div>
     """, unsafe_allow_html=True)
 
