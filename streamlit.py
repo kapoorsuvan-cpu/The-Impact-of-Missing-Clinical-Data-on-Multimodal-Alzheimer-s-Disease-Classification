@@ -507,11 +507,4 @@ elif section == "Future Work":
         "This project demonstrates that robustness-focused multimodal healthcare AI may be more clinically valuable than systems optimized only for ideal datasets."
     )
 
-# ============================================
-# FOOTER
-# ============================================
-st.markdown("---")
 
-st.caption(
-    "Developed by Sumeet Kapoor | Multimodal Healthcare AI Research | Alzheimer's Disease Classification & Missing-Modality Robustness"
-)
