@@ -45,6 +45,16 @@ html, body, [class*="css"] {
     color: #F9FAFB;
 }
 
+/* TABLE TEXT ALIGNMENT */
+
+thead tr th {
+    text-align: right !important;
+}
+
+tbody tr td {
+    text-align: right !important;
+}
+
 /* SIDEBAR */
 
 section[data-testid="stSidebar"] {
@@ -930,9 +940,20 @@ elif page == "Findings":
 
     section_header("Scientific Results Tables")
 
-    st.dataframe(performance, use_container_width=True)
-    st.dataframe(modality, use_container_width=True)
-    st.dataframe(ablation, use_container_width=True)
+    st.dataframe(
+        performance.style.hide(axis="index"),
+        use_container_width=True
+    )
+    
+    st.dataframe(
+        modality.style.hide(axis="index"),
+        use_container_width=True
+    )
+    
+    st.dataframe(
+        ablation.style.hide(axis="index"),
+        use_container_width=True
+    )
 
     st.markdown("""
     ### Interpretation
