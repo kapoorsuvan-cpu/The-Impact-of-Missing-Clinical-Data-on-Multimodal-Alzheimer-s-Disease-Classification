@@ -687,9 +687,9 @@ elif page == "Model Selection & Baseline Results":
     
     st.plotly_chart(fig, use_container_width=True)
 
-        st.markdown("""
-        Delayed and immediate recall variables are strongly positively correlated, reflecting related memory systems. Trail-making performance inversely correlates with memory variables, reflecting executive dysfunction.
-        """)
+    st.markdown("""
+    Delayed and immediate recall variables are strongly positively correlated, reflecting related memory systems. Trail-making performance inversely correlates with memory variables, reflecting executive dysfunction.
+    """)
 
     st.divider()
 
