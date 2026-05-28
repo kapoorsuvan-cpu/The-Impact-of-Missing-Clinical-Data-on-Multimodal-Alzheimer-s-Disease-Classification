@@ -161,11 +161,7 @@ div[data-testid="stDataFrame"] {
     overflow: hidden;
 }
 
-/* CODE */
 
-code {
-    color: #34D399 !important;
-}
 
 /* EXPANDER */
 
