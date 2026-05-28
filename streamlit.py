@@ -1,4 +1,3 @@
-```python
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -574,4 +573,3 @@ elif page == "Ablation Study & Final Conclusions":
     This project shifts the focus from maximizing ideal-condition accuracy to designing clinically deployable healthcare AI systems.
     </div>
     """, unsafe_allow_html=True)
-```
