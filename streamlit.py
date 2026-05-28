@@ -327,18 +327,40 @@ if page == "Home":
     })
 
     st.dataframe(dataset, use_container_width=True)
-
     fig = px.pie(
         values=[52, 48],
         names=["CN", "DEM"],
-        title="Patient Distribution"
+        title="Patient Distribution",
+        color_discrete_sequence=[
+            "#64748B",  # slate blue-gray
+            "#94A3B8"   # lighter muted gray-blue
+        ]
     )
-
+    
+    fig.update_traces(
+        textfont_size=20,
+        marker=dict(
+            line=dict(color="#111827", width=2)
+        )
+    )
+    
     fig.update_layout(
         template="plotly_dark",
         paper_bgcolor="#0B0F19",
-        plot_bgcolor="#0B0F19"
+        plot_bgcolor="#0B0F19",
+        font=dict(
+            color="#F9FAFB",
+            family="Inter"
+        ),
+        title_font=dict(
+            size=28
+        ),
+        legend=dict(
+            font=dict(size=18),
+            bgcolor="rgba(0,0,0,0)"
+        )
     )
+
 
     st.plotly_chart(fig, use_container_width=True)
 
