@@ -18,6 +18,22 @@ st.set_page_config(
 # =========================
 
 st.markdown("""
+/* DROPDOWN FIX */
+
+div[data-baseweb="select"] > div {
+    background-color: white !important;
+    color: #1a1a2e !important;
+    border: 2px solid #d1d5db !important;
+}
+
+li[role="option"] {
+    background-color: white !important;
+    color: #1a1a2e !important;
+}
+
+li[role="option"]:hover {
+    background-color: #e5f3f3 !important;
+}
 <style>
 
     .stApp {
@@ -122,6 +138,44 @@ st.markdown("""
 
     table {
         color: #1a1a2e !important;
+    }
+    
+    /* CODE BLOCK FIX */
+    
+    pre {
+        background-color: #111827 !important;
+        color: #f9fafb !important;
+        border-radius: 12px !important;
+        border: 1px solid #374151 !important;
+    }
+    
+    code {
+        color: #f9fafb !important;
+    }
+    
+    .card,
+    .abstract-box,
+    .pipeline-box,
+    .takeaway-box,
+    div[data-testid="metric-container"] {
+        border: 1px solid #d1d5db !important;
+    }
+
+    /* DROPDOWN FIX */
+    
+    div[data-baseweb="select"] > div {
+        background-color: white !important;
+        color: #1a1a2e !important;
+        border: 2px solid #d1d5db !important;
+    }
+    
+    li[role="option"] {
+        background-color: white !important;
+        color: #1a1a2e !important;
+    }
+    
+    li[role="option"]:hover {
+        background-color: #e5f3f3 !important;
     }
 
 </style>
@@ -552,26 +606,51 @@ elif page == "Model Selection & Baseline Results":
         Logistic Regression achieved the strongest performance while remaining clinically interpretable.
         """)
 
-    # TAB 3
+# TAB 3
     with tabs[2]:
-
-        fig, ax = plt.subplots(figsize=(8,6))
 
         fpr1 = np.linspace(0, 1, 100)
         tpr1 = np.sqrt(fpr1)
 
-        ax.plot(fpr1, 1 - (1 - tpr1)**3, label='Logistic Regression (AUC=0.977)')
-        ax.plot(fpr1, 1 - (1 - tpr1)**2.6, label='Random Forest (AUC=0.968)')
-        ax.plot(fpr1, 1 - (1 - tpr1)**2.4, label='Extra Trees (AUC=0.965)')
+        fig = go.Figure()
+    
+        fig.add_trace(go.Scatter(
+            x=fpr1,
+            y=1 - (1 - tpr1)**3,
+            mode='lines',
+            name='Logistic Regression (AUC=0.977)'
+        ))
 
-        ax.plot([0,1], [0,1], linestyle='--')
-
-        ax.set_xlabel("False Positive Rate")
-        ax.set_ylabel("True Positive Rate")
-        ax.legend()
-
-        st.pyplot(fig)
-
+        fig.add_trace(go.Scatter(
+            x=fpr1,
+            y=1 - (1 - tpr1)**2.6,
+            mode='lines',
+            name='Random Forest (AUC=0.968)'
+        ))
+    
+        fig.add_trace(go.Scatter(
+            x=fpr1,
+            y=1 - (1 - tpr1)**2.4,
+            mode='lines',
+            name='Extra Trees (AUC=0.965)'
+        ))
+    
+        fig.add_trace(go.Scatter(
+            x=[0,1],
+            y=[0,1],
+            mode='lines',
+            line=dict(dash='dash'),
+            name='Random Classifier'
+        ))
+    
+        fig.update_layout(
+            xaxis_title="False Positive Rate",
+            yaxis_title="True Positive Rate",
+            template="plotly_white"
+        )
+    
+        st.plotly_chart(fig, use_container_width=True)
+    
         st.markdown("""
         The closer a curve approaches the upper-left corner, the stronger the classifier. LR AUC = 0.977 indicates near-perfect discrimination between CN and DEM.
         """)
@@ -590,17 +669,23 @@ elif page == "Model Selection & Baseline Results":
 
         labels = ["AGE","SEX","EDUC","RAVLTFG","RAVLTIMM","TRABSCOR"]
 
-        fig, ax = plt.subplots(figsize=(8,6))
-        sns.heatmap(
-            corr,
-            annot=True,
-            xticklabels=labels,
-            yticklabels=labels,
-            cmap="coolwarm",
-            ax=ax
-        )
-
-        st.pyplot(fig)
+    fig = go.Figure(data=go.Heatmap(
+        z=corr,
+        x=labels,
+        y=labels,
+        colorscale='RdBu',
+        zmin=-1,
+        zmax=1,
+        text=np.round(corr, 2),
+        texttemplate="%{text}"
+    ))
+    
+    fig.update_layout(
+        width=700,
+        height=600
+    )
+    
+    st.plotly_chart(fig, use_container_width=True)
 
         st.markdown("""
         Delayed and immediate recall variables are strongly positively correlated, reflecting related memory systems. Trail-making performance inversely correlates with memory variables, reflecting executive dysfunction.
@@ -617,20 +702,22 @@ elif page == "Model Selection & Baseline Results":
     st.subheader("Confusion Matrix")
 
     cm = np.array([[68,3],[1,11]])
-
-    fig, ax = plt.subplots(figsize=(5,4))
-
-    sns.heatmap(
-        cm,
-        annot=True,
-        fmt='d',
-        cmap='Blues',
-        xticklabels=['Pred CN', 'Pred DEM'],
-        yticklabels=['Actual CN', 'Actual DEM'],
-        ax=ax
+    
+    fig = go.Figure(data=go.Heatmap(
+        z=cm,
+        x=['Pred CN', 'Pred DEM'],
+        y=['Actual CN', 'Actual DEM'],
+        colorscale='Blues',
+        text=cm,
+        texttemplate="%{text}"
+    ))
+    
+    fig.update_layout(
+        width=500,
+        height=400
     )
-
-    st.pyplot(fig)
+    
+    st.plotly_chart(fig, use_container_width=False)
 
     st.success("""
     Only 1 dementia patient was missed (false negative) out of 12 total. Minimizing missed diagnoses is clinically critical.
@@ -797,8 +884,11 @@ X_train_robust.loc[mask, clinical_features] = 0
         "Features": [6, 30, 36]
     })
 
-    st.table(modality_df)
-
+    st.dataframe(
+        modality_df,
+        use_container_width=True,
+        hide_index=True
+    )
     st.markdown("""
     Clinical features alone are highly predictive. MRI biomarkers remain meaningful but weaker individually. Combining both modalities yields the strongest overall performance.
     """)
@@ -815,7 +905,11 @@ elif page == "Ablation Study & Final Conclusions":
     The ablation study investigates how different modality dropout rates affect robustness under missing data.
     """)
 
-    st.table(ablation_df)
+    st.dataframe(
+        ablation_df,
+        use_container_width=True,
+        hide_index=True
+    )
 
     tab1, tab2 = st.tabs([
         "Missing AUC vs Dropout",
