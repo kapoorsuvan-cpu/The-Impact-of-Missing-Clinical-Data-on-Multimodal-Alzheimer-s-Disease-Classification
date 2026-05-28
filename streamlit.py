@@ -1,4 +1,5 @@
 # app.py — Streamlit Research Dashboard
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -54,20 +55,132 @@ st.markdown(
 # ============================================
 # HERO SECTION
 # ============================================
+
 st.markdown(
     """
-    <div class="hero">
-        <h1>Improving Robustness of Multimodal Alzheimer's Disease Classification Under Missing Clinical Data</h1>
-        <p style="font-size:18px;">
-        Research project investigating how multimodal machine learning systems behave when clinical information becomes incomplete or unavailable.
-        </p>
-        <p>
-        Focus Areas: Multimodal Healthcare AI • MRI Biomarkers • Missing Modality Robustness • Clinical Deployment
-        </p>
+    <style>
+    .hero-container {
+        background: linear-gradient(135deg, #020617 0%, #0f172a 40%, #111827 100%);
+        padding: 3rem;
+        border-radius: 24px;
+        margin-bottom: 2rem;
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+    }
+
+    .hero-title {
+        font-size: 54px;
+        font-weight: 800;
+        color: white;
+        line-height: 1.1;
+        margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+        font-size: 20px;
+        color: #cbd5e1;
+        max-width: 950px;
+        line-height: 1.7;
+        margin-bottom: 2rem;
+    }
+
+    .hero-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .hero-card {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.08);
+        padding: 1.2rem;
+        border-radius: 16px;
+    }
+
+    .hero-card-title {
+        color: #94a3b8;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.4rem;
+    }
+
+    .hero-card-value {
+        color: white;
+        font-size: 24px;
+        font-weight: 700;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    """
+    <div class="hero-container">
+        <div class="hero-title">
+            Building Robust Multimodal Healthcare AI for Alzheimer's Disease
+        </div>
+
+        <div class="hero-subtitle">
+            This research explores how multimodal machine learning systems for Alzheimer's disease diagnosis behave under incomplete real-world healthcare conditions. Rather than optimizing only for benchmark accuracy, the project investigates robustness under missing clinical information using multimodal MRI and cognitive data from the ADNI dataset.
+            <br><br>
+            The central finding demonstrates that multimodal systems become highly dependent on clinical features, but robustness-oriented modality dropout training substantially improves resilience without sacrificing baseline predictive performance.
+        </div>
+
+        <div class="hero-grid">
+            <div class="hero-card">
+                <div class="hero-card-title">Best Model ROC-AUC</div>
+                <div class="hero-card-value">0.977</div>
+            </div>
+
+            <div class="hero-card">
+                <div class="hero-card-title">Missing Modality AUC</div>
+                <div class="hero-card-value">0.771</div>
+            </div>
+
+            <div class="hero-card">
+                <div class="hero-card-title">Robust Model AUC</div>
+                <div class="hero-card-value">0.863</div>
+            </div>
+
+            <div class="hero-card">
+                <div class="hero-card-title">Research Focus</div>
+                <div class="hero-card-value">Healthcare AI Robustness</div>
+            </div>
+        </div>
     </div>
     """,
     unsafe_allow_html=True
 )
+
+st.markdown("### Key Research Themes")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.info(
+        "**Multimodal Patient Modeling**
+
+Integrating MRI biomarkers and cognitive testing to study complementary anatomical and behavioral disease signals."
+    )
+
+with col2:
+    st.info(
+        "**Missing-Modality Robustness**
+
+Evaluating how healthcare AI systems degrade when clinical information becomes incomplete or unavailable."
+    )
+
+with col3:
+    st.info(
+        "**Clinical Deployment Realism**
+
+Moving beyond idealized benchmark settings toward clinically deployable machine learning systems."
+    )
+
+st.markdown("---")
 
 # ============================================
 # SIDEBAR
@@ -507,4 +620,22 @@ elif section == "Future Work":
         "This project demonstrates that robustness-focused multimodal healthcare AI may be more clinically valuable than systems optimized only for ideal datasets."
     )
 
+# ============================================
+# FOOTER
+# ============================================
 
+st.markdown("---")
+
+st.markdown(
+    """
+    <div style='padding: 1rem 0 2rem 0;'>
+        <h3>Research Summary</h3>
+        <p style='font-size:16px; line-height:1.8;'>
+        This project demonstrates that multimodal Alzheimer's disease classifiers can achieve strong predictive performance while simultaneously exposing a major translational challenge in healthcare AI: multimodal systems become vulnerable when patient information is incomplete.
+        <br><br>
+        Through robustness-oriented modality dropout training, this research showed that resilience to missing clinical information can be substantially improved without major loss in baseline predictive performance, supporting the development of more clinically deployable healthcare AI systems.
+        </p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
