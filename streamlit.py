@@ -640,59 +640,6 @@ if page == "Home":
     print(missing_auc)
     """, language="python")
             
-from sklearn.impute import SimpleImputer
-
-imputer = SimpleImputer(strategy="median")
-
-X_train = imputer.fit_transform(X_train)
-X_test = imputer.transform(X_test)
-""", language="python")
-
-            elif step == "Scaling":
-                st.code("""
-from sklearn.preprocessing import StandardScaler
-
-scaler = StandardScaler()
-
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
-""", language="python")
-
-            elif step == "Train/Test Split":
-                st.code("""
-from sklearn.model_selection import train_test_split
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X,
-    y,
-    test_size=0.2,
-    stratify=y,
-    random_state=42
-)
-""", language="python")
-
-            elif step == "Model Training":
-                st.code("""
-from sklearn.linear_model import LogisticRegression
-
-model = LogisticRegression(
-    max_iter=1000,
-    class_weight="balanced"
-)
-
-model.fit(X_train, y_train)
-""", language="python")
-
-            elif step == "Robustness Experiments":
-                st.code("""
-mask = np.random.binomial(
-    1,
-    dropout_rate,
-    size=clinical_features.shape
-)
-
-clinical_features = clinical_features * (1 - mask)
-""", language="python")
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
