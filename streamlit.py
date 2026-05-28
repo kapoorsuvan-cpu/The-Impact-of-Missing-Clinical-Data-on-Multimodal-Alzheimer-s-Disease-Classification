@@ -717,6 +717,7 @@ elif page == "Findings":
     )
     
     fig1.update_layout(
+        title=None,
         paper_bgcolor=CHART_COLORS["bg"],
         plot_bgcolor=CHART_COLORS["bg"],
         font=dict(
