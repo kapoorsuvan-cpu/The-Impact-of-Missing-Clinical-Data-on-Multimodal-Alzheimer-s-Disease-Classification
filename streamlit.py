@@ -258,20 +258,17 @@ with st.sidebar:
 
 if page == "Home":
 
-    st.markdown(
-        """
-        <div class='hero'>
-            <h1 class='hero-title'>
-                Improving Robustness of Multimodal Alzheimer’s Disease Classification Under Missing Clinical Data
-            </h1>
+    st.markdown("""
+    <div class='hero'>
+        <h1 class='hero-title'>
+            Improving Robustness of Multimodal Alzheimer’s Disease Classification Under Missing Clinical Data
+        </h1>
     
-            <div class='hero-subtitle'>
-                This research investigates how multimodal machine learning systems for Alzheimer’s disease diagnosis behave under incomplete clinical information and missing modalities.
-            </div>
+        <div class='hero-subtitle'>
+            This research investigates how multimodal machine learning systems for Alzheimer’s disease diagnosis behave under incomplete clinical information and missing modalities.
         </div>
-        """,
-        unsafe_allow_html=True
-    )
+    </div>
+    """, unsafe_allow_html=True)
 
     c1, c2, c3, c4 = st.columns(4)
 
