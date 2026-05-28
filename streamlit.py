@@ -724,6 +724,7 @@ elif page == "Findings":
             color=CHART_COLORS["text"],
             family="Inter"
         ),
+        title_font_size=0,
         xaxis=dict(
             showgrid=False
         ),
