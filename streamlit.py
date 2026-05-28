@@ -332,8 +332,8 @@ if page == "Home":
         names=["CN", "DEM"],
         title="Patient Distribution",
         color_discrete_sequence=[
-            "#64748B",  # slate blue-gray
-            "#94A3B8"   # lighter muted gray-blue
+            "#3B82F6",  # slate blue-gray
+            "#93C5FD"   # lighter muted gray-blue
         ]
     )
     
