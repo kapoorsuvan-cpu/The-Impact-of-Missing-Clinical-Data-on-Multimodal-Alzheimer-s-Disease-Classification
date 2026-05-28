@@ -1,4 +1,3 @@
-```python
 import os
 import pandas as pd
 import numpy as np
@@ -491,5 +490,4 @@ elif selected == "Key Takeaways":
     
     </div>
     """, unsafe_allow_html=True)
-```
 
