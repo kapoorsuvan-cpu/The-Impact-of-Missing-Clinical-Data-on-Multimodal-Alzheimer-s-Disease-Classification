@@ -161,10 +161,12 @@ col1, col2, col3 = st.columns(3)
 
 with col1:
     st.info(
-        "**Multimodal Patient Modeling**
+    """
+    **Multimodal Patient Modeling**
 
-Integrating MRI biomarkers and cognitive testing to study complementary anatomical and behavioral disease signals."
-    )
+    Integrating MRI biomarkers and cognitive testing to study complementary anatomical and behavioral disease signals.
+    """
+)
 
 with col2:
     st.info(
