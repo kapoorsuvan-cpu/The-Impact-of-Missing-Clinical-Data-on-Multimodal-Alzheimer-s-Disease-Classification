@@ -6,8 +6,6 @@ from PIL import Image
 # Plotting
 import plotly.express as px
 import plotly.graph_objects as go
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 st.set_page_config(
     page_title="Alzheimer's ML Research",
@@ -34,7 +32,6 @@ st.markdown("""
 
     section[data-testid="stSidebar"] {
         background-color: #111827;
-        border-right: 2px solid #374151;
     }
 
     section[data-testid="stSidebar"] * {
@@ -70,7 +67,6 @@ st.markdown("""
         padding: 1.5rem;
         border-radius: 16px;
         border-left: 6px solid #0f7173;
-        border: 1px solid #d1d5db;
         box-shadow: 0 4px 16px rgba(0,0,0,0.06);
         color: #1a1a2e !important;
     }
@@ -80,7 +76,6 @@ st.markdown("""
         padding: 1.5rem;
         border-radius: 16px;
         box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-        border: 1px solid #d1d5db;
         color: #1a1a2e !important;
         height: 100%;
     }
@@ -90,14 +85,9 @@ st.markdown("""
         color: white !important;
         padding: 16px;
         border-radius: 14px;
-        border: 2px solid #0b5c5d;
         text-align: center;
         font-weight: 600;
         margin-bottom: 12px;
-    }
-
-    .pipeline-box * {
-        color: white !important;
     }
 
     div[data-testid="metric-container"] {
@@ -105,7 +95,7 @@ st.markdown("""
         border-radius: 16px;
         padding: 18px;
         box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-        border: 2px solid #d1d5db;
+        border: 1px solid #e5e7eb;
     }
 
     div[data-testid="metric-container"] label {
@@ -128,109 +118,10 @@ st.markdown("""
 
     .stAlert {
         border-radius: 14px;
-        border: 1px solid #d1d5db;
     }
-
-    .takeaway-box {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 16px;
-        border-left: 6px solid #0f7173;
-        border: 1px solid #d1d5db;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-        font-size: 1.05rem;
-        line-height: 1.7;
-    }
-
-    /* TABLE FIXES */
 
     table {
-        width: 100% !important;
-        border-collapse: collapse !important;
-        background: white !important;
-        border: 2px solid #d1d5db !important;
-        border-radius: 12px !important;
-        overflow: hidden !important;
-    }
-
-    th {
-        background-color: #0f7173 !important;
-        color: white !important;
-        border: 1px solid #d1d5db !important;
-        padding: 12px !important;
-        text-align: left !important;
-    }
-
-    td {
-        border: 1px solid #d1d5db !important;
-        padding: 12px !important;
         color: #1a1a2e !important;
-        background-color: white !important;
-    }
-
-    .dataframe {
-        border: 2px solid #d1d5db !important;
-        border-radius: 12px !important;
-        overflow: hidden !important;
-    }
-
-    /* CODE BLOCK FIX */
-
-    pre {
-        background-color: #111827 !important;
-        color: #f9fafb !important;
-        border-radius: 12px !important;
-        border: 1px solid #374151 !important;
-        padding: 1rem !important;
-    }
-
-    code {
-        color: #f9fafb !important;
-    }
-
-    /* EXPANDER FIX */
-
-    .streamlit-expanderHeader {
-        background-color: white !important;
-        border: 2px solid #d1d5db !important;
-        border-radius: 12px !important;
-    }
-
-    /* DROPDOWN FIX */
-
-    div[data-baseweb="select"] > div {
-        background-color: white !important;
-        border: 2px solid #d1d5db !important;
-        border-radius: 12px !important;
-        color: #1a1a2e !important;
-    }
-
-    div[data-baseweb="popover"] {
-        background-color: white !important;
-        color: #1a1a2e !important;
-        border: 2px solid #d1d5db !important;
-    }
-
-    ul {
-        background-color: white !important;
-    }
-
-    li[role="option"] {
-        background-color: white !important;
-        color: #1a1a2e !important;
-    }
-
-    li[role="option"]:hover {
-        background-color: #e5f3f3 !important;
-    }
-
-    /* RADIO BUTTON FIX */
-
-    div[role="radiogroup"] {
-        background: white;
-        padding: 10px;
-        border-radius: 12px;
-        border: 2px solid #d1d5db;
     }
 
 </style>
@@ -239,7 +130,6 @@ st.markdown("""
 # =========================
 # SIDEBAR
 # =========================
-
 st.sidebar.markdown("""
 # Alzheimer's ML Research
 ### Sumeet Kapoor
@@ -330,6 +220,10 @@ if page == "Overview & Motivation":
         - Improved clinical trial enrollment  
         """)
 
+        st.markdown("""
+        Machine learning is increasingly being explored as a clinical decision support tool for neurodegenerative disease diagnosis, particularly when combining multiple patient information sources.
+        """)
+
     with col2:
         st.markdown("## The Research Gap")
 
@@ -344,6 +238,28 @@ if page == "Overview & Motivation":
             "Most existing ML studies assume perfectly complete patient records. This assumption fails in practice."
         )
 
+    st.divider()
+
+    st.info("""
+    **Central Research Question:**  
+    How does multimodal Alzheimer's disease classification degrade under missing clinical information — and can modality dropout training improve robustness to missing data?
+    """)
+
+    st.divider()
+
+    c1, c2, c3 = st.columns(3)
+
+    with c1:
+        st.metric("Baseline ROC-AUC", "0.977")
+
+    with c2:
+        st.metric("Performance Drop (no robustness)", "−0.205")
+
+    with c3:
+        st.metric("Performance Drop (with robustness)", "−0.114")
+
+    st.caption("Scroll through each section to understand how these numbers were produced.")
+
 # =========================
 # PAGE 2
 # =========================
@@ -353,6 +269,13 @@ elif page == "Dataset & Feature Design":
     st.title("Dataset & Feature Design")
 
     st.header("The ADNI Dataset")
+
+    st.markdown("""
+    The Alzheimer's Disease Neuroimaging Initiative (ADNI) is one of the largest and most widely used public Alzheimer's disease research datasets. 
+    It contains demographic information, cognitive testing scores, MRI and PET neuroimaging, and longitudinal follow-up data across multiple disease stages.
+
+    This project focuses specifically on binary classification between Cognitively Normal (CN) patients and Dementia (DEM) patients.
+    """)
 
     c1, c2, c3 = st.columns(3)
 
@@ -365,6 +288,79 @@ elif page == "Dataset & Feature Design":
     with c3:
         st.metric("Train / Test Split", "80% / 20% stratified")
 
+    st.divider()
+
+    st.header("The Two Modalities")
+
+    tab1, tab2 = st.tabs(["Clinical Modality", "MRI Modality"])
+
+    with tab1:
+        st.markdown("""
+        Captures observable behavioral and cognitive performance.
+        """)
+
+        clinical_df = pd.DataFrame({
+            "Feature Name": ["AGE", "SEX", "EDUC", "RAVLTFG", "RAVLTIMM", "TRABSCOR"],
+            "Biological Meaning": [
+                "Alzheimer's risk increases with age",
+                "Sex differences influence prevalence and progression",
+                "Education relates to cognitive reserve",
+                "Delayed verbal memory recall",
+                "Immediate verbal memory recall",
+                "Executive function and processing speed"
+            ]
+        })
+
+        st.table(clinical_df)
+
+    with tab2:
+        st.markdown("""
+        Captures structural neurodegeneration within the brain.
+        """)
+
+        st.markdown("""
+        **Source:** FreeSurfer UCSFFSX6 dataset
+
+        MRI biomarkers include:
+        - Cortical thickness measurements
+        - Brain volumetric measurements
+        - Ventricular enlargement indicators
+        - Structural atrophy patterns
+        """)
+
+        st.metric("Final MRI Biomarkers", "Top 30 variance-selected features")
+
+        st.info("""
+        MRI provides complementary anatomical information that differs fundamentally from behavioral cognitive testing — making it valuable for multimodal fusion.
+        """)
+
+    st.divider()
+
+    st.header("Intentional Feature Removal (Semantic Leakage)")
+
+    st.warning("Why We Removed Highly Diagnostic Variables")
+
+    st.markdown("""
+    Four cognitive variables were intentionally removed because they overlap directly with the diagnostic criteria used to define Alzheimer's disease. 
+    Including them would create semantic leakage — allowing the model to memorize diagnostic definitions rather than learning genuine multimodal disease patterns.
+    """)
+
+    leakage_df = pd.DataFrame({
+        "Removed Feature": ["MMSCORE", "MOCA", "CDRSB", "FAQTOTAL"],
+        "Why It Was Removed": [
+            "Mini-Mental State score — directly part of diagnosis criteria",
+            "Montreal Cognitive Assessment — directly diagnostic",
+            "Clinical Dementia Rating — core diagnostic variable",
+            "Functional Activities Questionnaire — used in diagnosis"
+        ]
+    })
+
+    st.table(leakage_df)
+
+    st.success("""
+    Removing these variables created a more scientifically rigorous and clinically defensible framework — the model must learn from genuine biological signals, not diagnostic tautologies.
+    """)
+
 # =========================
 # PAGE 3
 # =========================
@@ -373,15 +369,17 @@ elif page == "Preprocessing Pipeline":
 
     st.title("Preprocessing Pipeline")
 
+    st.markdown("## End-to-End Data Pipeline")
+
     pipeline_steps = [
         ".rda → CSV Conversion",
         "Diagnosis Filtering (CN / DEM only)",
-        "Patient-Level Merging",
-        "MRI Deduplication",
-        "High-Missing Feature Removal",
-        "Variance-Based MRI Feature Selection",
+        "Patient-Level Merging (Clinical + MRI on RID)",
+        "MRI Deduplication (latest scan per patient)",
+        "High-Missing Feature Removal (>30% threshold)",
+        "Variance-Based MRI Feature Selection (Top 30)",
         "Median Imputation",
-        "Stratified Train/Test Split",
+        "Stratified 80/20 Train/Test Split",
         "StandardScaler Normalization"
     ]
 
@@ -392,6 +390,63 @@ elif page == "Preprocessing Pipeline":
         </div>
         """, unsafe_allow_html=True)
 
+    st.divider()
+
+    st.info("""
+    **Why median imputation?**  
+    Missing MRI values were imputed using median rather than deletion because:
+    (1) it preserves significantly more patients,
+    (2) it is robust to outliers in neuroimaging data,
+    and (3) row deletion would have caused major sample loss.
+    """)
+
+    st.info("""
+    **Why variance filtering for MRI?**  
+    The MRI dataset originally contained hundreds of structural variables.
+    Variance filtering selects the 30 most informative biomarkers, reducing overfitting risk and focusing the model on the highest-signal neurodegeneration markers.
+    """)
+
+    st.info("""
+    **Why stratified splitting?**  
+    The dataset has class imbalance — more CN than DEM patients.
+    Stratified splitting ensures both train and test sets preserve the same class proportions.
+    """)
+
+    st.info("""
+    **Why StandardScaler?**  
+    Scaling prevents variables with larger numeric ranges from dominating optimization during logistic regression training.
+    """)
+
+    st.divider()
+
+    with st.expander("Show: MRI Feature Filtering Code"):
+        st.code("""
+variance = mri_df.var().sort_values(ascending=False)
+top_features = variance.head(30).index
+X_mri = mri_df[top_features]
+        """, language="python")
+
+    with st.expander("Show: Imputation Code"):
+        st.code("""
+from sklearn.impute import SimpleImputer
+
+imputer = SimpleImputer(strategy='median')
+X_imputed = imputer.fit_transform(X)
+        """, language="python")
+
+    with st.expander("Show: Train/Test Split Code"):
+        st.code("""
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    stratify=y,
+    random_state=42
+)
+        """, language="python")
+
 # =========================
 # PAGE 4
 # =========================
@@ -399,6 +454,48 @@ elif page == "Preprocessing Pipeline":
 elif page == "Model Selection & Baseline Results":
 
     st.title("Model Selection & Baseline Results")
+
+    st.header("Models Evaluated")
+
+    c1, c2, c3 = st.columns(3)
+
+    with c1:
+        st.markdown("""
+        <div class="card">
+        <h4>Logistic Regression</h4>
+        <p>Interpretable linear baseline</p>
+        <p>Best for clinical deployability</p>
+        <p>Class-balanced</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c2:
+        st.markdown("""
+        <div class="card">
+        <h4>Random Forest</h4>
+        <p>Non-linear ensemble</p>
+        <p>300 trees, max_depth=5</p>
+        <p>Class-balanced</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c3:
+        st.markdown("""
+        <div class="card">
+        <h4>Extra Trees</h4>
+        <p>High-variance ensemble</p>
+        <p>300 trees, no depth limit</p>
+        <p>Class-balanced</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.divider()
+
+    st.success("""
+    Logistic Regression achieved the strongest ROC-AUC performance while also offering interpretability, stability, and lower overfitting risk — critical properties for a healthcare AI system.
+    """)
+
+    st.divider()
 
     tabs = st.tabs([
         "Class Distribution",
@@ -424,6 +521,10 @@ elif page == "Model Selection & Baseline Results":
 
         st.plotly_chart(fig, use_container_width=True)
 
+        st.markdown("""
+        Class imbalance is common in healthcare datasets. ROC-AUC and class-balanced weighting were used to prevent majority-class dominance during training.
+        """)
+
     # TAB 2
     with tabs[1]:
 
@@ -435,6 +536,21 @@ elif page == "Model Selection & Baseline Results":
         )
 
         st.plotly_chart(fig, use_container_width=True)
+
+        c1, c2, c3 = st.columns(3)
+
+        with c1:
+            st.metric("LR", "0.977")
+
+        with c2:
+            st.metric("RF", "0.968")
+
+        with c3:
+            st.metric("ET", "0.965")
+
+        st.markdown("""
+        Logistic Regression achieved the strongest performance while remaining clinically interpretable.
+        """)
 
     # TAB 3
     with tabs[2]:
@@ -456,6 +572,10 @@ elif page == "Model Selection & Baseline Results":
 
         st.pyplot(fig)
 
+        st.markdown("""
+        The closer a curve approaches the upper-left corner, the stronger the classifier. LR AUC = 0.977 indicates near-perfect discrimination between CN and DEM.
+        """)
+
     # TAB 4
     with tabs[3]:
 
@@ -471,7 +591,6 @@ elif page == "Model Selection & Baseline Results":
         labels = ["AGE","SEX","EDUC","RAVLTFG","RAVLTIMM","TRABSCOR"]
 
         fig, ax = plt.subplots(figsize=(8,6))
-
         sns.heatmap(
             corr,
             annot=True,
@@ -483,6 +602,40 @@ elif page == "Model Selection & Baseline Results":
 
         st.pyplot(fig)
 
+        st.markdown("""
+        Delayed and immediate recall variables are strongly positively correlated, reflecting related memory systems. Trail-making performance inversely correlates with memory variables, reflecting executive dysfunction.
+        """)
+
+    st.divider()
+
+    st.header("Full Healthcare Metrics Table")
+
+    st.table(metrics_df)
+
+    st.divider()
+
+    st.subheader("Confusion Matrix")
+
+    cm = np.array([[68,3],[1,11]])
+
+    fig, ax = plt.subplots(figsize=(5,4))
+
+    sns.heatmap(
+        cm,
+        annot=True,
+        fmt='d',
+        cmap='Blues',
+        xticklabels=['Pred CN', 'Pred DEM'],
+        yticklabels=['Actual CN', 'Actual DEM'],
+        ax=ax
+    )
+
+    st.pyplot(fig)
+
+    st.success("""
+    Only 1 dementia patient was missed (false negative) out of 12 total. Minimizing missed diagnoses is clinically critical.
+    """)
+
 # =========================
 # PAGE 5
 # =========================
@@ -491,11 +644,30 @@ elif page == "Missing Modality Experiment":
 
     st.title("Missing Modality Experiment")
 
+    st.warning("""
+    Real-world healthcare systems frequently contain incomplete clinical records. What happens to our multimodal classifier when the clinical modality disappears?
+    """)
+
+    st.markdown("""
+    Scenario simulated:
+    - MRI scans still exist
+    - Cognitive testing is incomplete or unavailable
+    - Realistic deployment failure mode
+    """)
+
+    st.divider()
+
     st.header("Simulation Method")
 
     st.code("""
 X_test_missing[clinical_features] = 0
     """, language="python")
+
+    st.markdown("""
+    All clinical feature values are zeroed out at test time. The model was trained on complete data but must now make predictions using MRI biomarkers only.
+    """)
+
+    st.divider()
 
     c1, c2 = st.columns(2)
 
@@ -505,6 +677,20 @@ X_test_missing[clinical_features] = 0
     with c2:
         st.metric("Missing Clinical AUC", "0.771", delta="-0.205")
 
+    st.error("""
+    A drop of 0.205 ROC-AUC represents a major degradation in diagnostic performance. Standard multimodal systems become critically dependent on clinical variables.
+    """)
+
+    st.divider()
+
+    st.info("""
+    **Can we train a model that is resilient to missing clinical information — without sacrificing performance when data is complete?**
+    """)
+
+    st.markdown("""
+    The next section introduces modality dropout training as a solution to this problem.
+    """)
+
 # =========================
 # PAGE 6
 # =========================
@@ -512,6 +698,96 @@ X_test_missing[clinical_features] = 0
 elif page == "Robustness Training & Cross-Validation":
 
     st.title("Robustness Training & Cross-Validation")
+
+    st.header("Teaching the Model to Survive Without Clinical Data")
+
+    st.markdown("""
+    During training, clinical variables were randomly removed for a subset of patients — forcing the model to learn from MRI information alone in those cases.
+    """)
+
+    with st.expander("Show implementation"):
+        st.code("""
+mask = np.random.rand(len(X_train_robust)) < 0.3
+X_train_robust.loc[mask, clinical_features] = 0
+        """, language="python")
+
+    st.info("""
+    30% of training patients had their clinical features zeroed out randomly.
+    """)
+
+    st.divider()
+
+    st.header("Cross-Validated Results")
+
+    st.markdown("""
+    Results were averaged across 5 stratified folds to ensure statistical reliability.
+    """)
+
+    cv_df = pd.DataFrame({
+        "Model": ["Baseline", "Robust"],
+        "Mean Full AUC": ["0.980 ± 0.007", "0.977 ± 0.008"],
+        "Mean Missing AUC": ["0.840 ± 0.034", "0.863 ± 0.042"],
+        "Mean Performance Drop": ["0.140 ± 0.028", "0.114 ± 0.037"]
+    })
+
+    st.table(cv_df)
+
+    c1, c2, c3, c4 = st.columns(4)
+
+    with c1:
+        st.metric("Baseline Full AUC", "0.980")
+
+    with c2:
+        st.metric("Robust Full AUC", "0.977", delta="-0.003")
+
+    with c3:
+        st.metric("Baseline Missing AUC", "0.840")
+
+    with c4:
+        st.metric("Robust Missing AUC", "0.863", delta="+0.023")
+
+    st.success("""
+    The robust model maintained nearly identical full-data performance while substantially improving resilience under missing clinical information.
+    """)
+
+    st.divider()
+
+    st.header("Missingness Robustness Experiment")
+
+    st.markdown("""
+    Missing Completely At Random (MCAR) conditions were simulated at increasing levels.
+    """)
+
+    st.table(missingness_df)
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Scatter(
+        x=missingness_df["Missingness"],
+        y=missingness_df["Baseline AUC"],
+        mode='lines+markers',
+        name='Baseline'
+    ))
+
+    fig.add_trace(go.Scatter(
+        x=missingness_df["Missingness"],
+        y=missingness_df["Robust AUC"],
+        mode='lines+markers',
+        name='Robust'
+    ))
+
+    fig.update_layout(
+        xaxis_title="% Missing Clinical Data",
+        yaxis_title="ROC-AUC"
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
+
+    st.success("""
+    At 50% missing data, the robust model dramatically outperforms the baseline. Robustness training becomes increasingly valuable under severe missingness.
+    """)
+
+    st.divider()
 
     st.header("Modality Comparison")
 
@@ -521,11 +797,11 @@ elif page == "Robustness Training & Cross-Validation":
         "Features": [6, 30, 36]
     })
 
-    st.dataframe(
-        modality_df,
-        use_container_width=True,
-        hide_index=True
-    )
+    st.table(modality_df)
+
+    st.markdown("""
+    Clinical features alone are highly predictive. MRI biomarkers remain meaningful but weaker individually. Combining both modalities yields the strongest overall performance.
+    """)
 
 # =========================
 # PAGE 7
@@ -535,13 +811,11 @@ elif page == "Ablation Study & Final Conclusions":
 
     st.title("Ablation Study & Final Conclusions")
 
-    st.subheader("Ablation Results")
+    st.info("""
+    The ablation study investigates how different modality dropout rates affect robustness under missing data.
+    """)
 
-    st.dataframe(
-        ablation_df,
-        use_container_width=True,
-        hide_index=True
-    )
+    st.table(ablation_df)
 
     tab1, tab2 = st.tabs([
         "Missing AUC vs Dropout",
@@ -573,3 +847,94 @@ elif page == "Ablation Study & Final Conclusions":
     st.success("""
     Increasing modality dropout consistently reduces performance degradation under missing data.
     """)
+
+    st.warning("""
+    Higher dropout slightly reduces full-data performance. Practitioners must balance peak accuracy with deployment robustness.
+    """)
+
+    st.divider()
+
+    st.header("What This Project Contributes")
+
+    st.success("""
+    **Multimodal Alzheimer's Classification Framework**  
+    Combining clinical cognitive features with MRI biomarkers to achieve ROC-AUC = 0.977
+    """)
+
+    st.success("""
+    **Missing Modality Evaluation Pipeline**  
+    Systematic evaluation of how multimodal systems fail under real-world data incompleteness
+    """)
+
+    st.success("""
+    **Modality Dropout Robustness Training**  
+    A simple intervention that substantially improves resilience without sacrificing accuracy
+    """)
+
+    st.success("""
+    **Clinically Meaningful Evaluation**  
+    Sensitivity, specificity, F1, and cross-validated healthcare evaluation metrics
+    """)
+
+    st.divider()
+
+    st.header("Limitations & Future Work")
+
+    c1, c2 = st.columns(2)
+
+    with c1:
+        st.subheader("Limitations")
+
+        st.markdown("""
+        - ADNI may not represent all populations  
+        - Binary classification only  
+        - Synthetic missingness may not perfectly reflect workflows  
+        - No external validation dataset  
+        - Variance filtering rather than domain-guided MRI selection  
+        """)
+
+    with c2:
+        st.subheader("Future Directions")
+
+        st.markdown("""
+        - External validation on OASIS or NACC  
+        - Longitudinal progression modeling  
+        - Transformer-based multimodal fusion  
+        - MAR missingness simulations  
+        - Fairness and subgroup robustness analysis  
+        """)
+
+    st.divider()
+
+    st.markdown("""
+    <div class="takeaway-box">
+    "This project shifts the focus from maximizing ideal-condition accuracy to designing clinically deployable healthcare AI systems. 
+    A model that remains stable under incomplete real-world data may ultimately be more clinically valuable than one optimized only for perfect datasets."
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.divider()
+
+    with st.expander("Technologies Used"):
+
+        st.markdown("""
+        - Python  
+        - R  
+        - scikit-learn  
+        - pandas  
+        - numpy  
+        - matplotlib  
+        - seaborn  
+
+        **Models**
+        - Logistic Regression  
+        - Random Forest  
+        - Extra Trees  
+
+        **Methods**
+        - Stratified Cross-Validation  
+        - Median Imputation  
+        - Modality Dropout Training  
+        - Variance Filtering  
+        - ROC-AUC Evaluation  
+        """)
