@@ -734,6 +734,16 @@ elif page == "Findings":
 
     st.plotly_chart(fig1, use_container_width=True)
 
+    st.markdown("""
+    ### Interpretation
+    
+    Logistic Regression achieved the strongest overall ROC-AUC performance, outperforming Random Forest and Extra Trees while maintaining substantially higher interpretability and calibration stability.
+    
+    Because Alzheimer’s disease classification is a clinically sensitive application, interpretability and reliability were prioritized alongside predictive performance. As a result, Logistic Regression was selected as the primary modeling architecture used throughout the robustness experiments and missing modality analyses.
+    
+    The strong performance of a relatively simple linear model also suggests that the multimodal feature space contained highly separable signal structure, particularly when combining cognitive and MRI biomarkers.
+    """)
+
     st.markdown("<hr>", unsafe_allow_html=True)
 
     section_header("Modality Analysis")
@@ -773,6 +783,16 @@ elif page == "Findings":
     )
 
     st.plotly_chart(fig2, use_container_width=True)
+
+    st.markdown("""
+    ### Interpretation
+    
+    Clinical cognitive variables alone provided remarkably strong predictive performance, highlighting the diagnostic value of memory, executive function, and cognitive assessment scores in Alzheimer’s disease classification.
+    
+    MRI biomarkers independently contributed meaningful predictive signal, though performance remained lower than the clinical-only modality. However, combining both modalities produced the highest overall ROC-AUC, demonstrating that MRI biomarkers provide complementary information beyond standard cognitive testing.
+    
+    These findings directly motivated the project’s multimodal modeling framework and reinforced the importance of preserving both modalities whenever possible.
+    """)
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
@@ -833,6 +853,16 @@ elif page == "Findings":
     )
     st.plotly_chart(fig3, use_container_width=True)
 
+    st.markdown("""
+    ### Interpretation
+    
+    The baseline multimodal model experienced substantial degradation as clinical information became increasingly unavailable. This finding demonstrated a major weakness of standard multimodal AI systems: strong dependence on complete clinical records.
+    
+    After introducing modality dropout training, the robust model maintained significantly greater stability across all missingness levels. The performance gap widened as missingness increased, indicating that robustness training improved the model’s ability to tolerate incomplete healthcare data.
+    
+    This experiment became the central contribution of the project and validated the effectiveness of simulated modality dropout for improving deployability in real clinical environments.
+    """)
+
     st.markdown("<hr>", unsafe_allow_html=True)
 
     section_header("Ablation Study")
@@ -885,6 +915,18 @@ elif page == "Findings":
 
     st.plotly_chart(fig4, use_container_width=True)
 
+    st.markdown("""
+    ### Interpretation
+    
+    Increasing modality dropout rates improved robustness under missing clinical data but introduced a small tradeoff in peak predictive performance.
+    
+    Lower dropout rates preserved maximum ROC-AUC performance under complete information, while higher dropout rates improved resilience under degraded clinical conditions.
+    
+    This tradeoff highlighted a central conclusion of the research: healthcare AI systems should optimize not only for ideal-case accuracy, but also for stability and reliability under real-world uncertainty.
+    
+    The final selected dropout configuration balanced both objectives by maintaining near-state-of-the-art accuracy while substantially improving robustness.
+    """)
+
     st.markdown("<hr>", unsafe_allow_html=True)
 
     section_header("Scientific Results Tables")
@@ -893,6 +935,15 @@ elif page == "Findings":
     st.dataframe(modality, use_container_width=True)
     st.dataframe(ablation, use_container_width=True)
 
+    st.markdown("""
+    ### Interpretation
+    
+    The correlation analysis revealed strong relationships between cognitive impairment metrics, including MMSE and CDR scores, which are clinically associated with Alzheimer’s disease progression and memory decline.
+    
+    Negative correlations between cognitive performance and disease severity aligned with established neurological findings and validated the biological plausibility of the feature space used by the models.
+    
+    These relationships helped explain why cognitive assessments contributed such strong predictive signal within the multimodal classification framework.
+    """)
     st.markdown("<hr>", unsafe_allow_html=True)
 
     section_header("Feature Relationships")
@@ -923,6 +974,15 @@ elif page == "Findings":
     )
 
     st.plotly_chart(fig5, use_container_width=True)
+        st.markdown("""
+    ### Interpretation
+    
+    The correlation analysis revealed strong relationships between cognitive impairment metrics, including MMSE and CDR scores, which are clinically associated with Alzheimer’s disease progression and memory decline.
+    
+    Negative correlations between cognitive performance and disease severity aligned with established neurological findings and validated the biological plausibility of the feature space used by the models.
+    
+    These relationships helped explain why cognitive assessments contributed such strong predictive signal within the multimodal classification framework.
+    """)
 
 # =========================
 # KEY TAKEAWAYS PAGE
