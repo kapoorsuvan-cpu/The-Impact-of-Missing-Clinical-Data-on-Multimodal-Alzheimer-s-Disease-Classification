@@ -7,9 +7,6 @@ from PIL import Image
 import plotly.express as px
 import plotly.graph_objects as go
 
-# Machine Learning
-from sklearn.metrics import roc_curve, auc
-
 st.set_page_config(
     page_title="Alzheimer's ML Research",
     layout="wide",
