@@ -966,7 +966,7 @@ elif page == "Findings":
     )
 
     st.plotly_chart(fig5, use_container_width=True)
-        st.markdown("""
+    st.markdown("""
     ### Interpretation
     
     The correlation analysis revealed strong relationships between cognitive impairment metrics, including MMSE and CDR scores, which are clinically associated with Alzheimer’s disease progression and memory decline.
