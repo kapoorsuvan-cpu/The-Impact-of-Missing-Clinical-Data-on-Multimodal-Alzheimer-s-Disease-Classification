@@ -1,4 +1,4 @@
-```python
+
 import os
 import nbformat
 import pandas as pd
@@ -763,4 +763,4 @@ elif selected == "Key Takeaways":
     
     </div>
     """, unsafe_allow_html=True)
-```
+
