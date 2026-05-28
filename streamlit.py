@@ -16,95 +16,114 @@ st.set_page_config(
 # =========================
 # CUSTOM CSS
 # =========================
+
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-    html, body, [class*="css"]  {
-        font-family: 'Inter', sans-serif;
-        background-color: #f7f9fb;
-        color: #1a1a2e;
-    }
-
-    .main {
-        background-color: #f7f9fb;
-    }
 
     .stApp {
-        background-color: #f7f9fb;
+        background-color: #f4f7fb;
+        color: #1a1a2e;
     }
 
-    h1, h2, h3, h4 {
-        color: #1a1a2e;
+    html, body, [class*="css"] {
+        font-family: 'Inter', sans-serif;
+        color: #1a1a2e !important;
+    }
+
+    section[data-testid="stSidebar"] {
+        background-color: #111827;
+    }
+
+    section[data-testid="stSidebar"] * {
+        color: white !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: #1a1a2e !important;
         font-weight: 700;
+    }
+
+    p, li, div, span, label {
+        color: #1a1a2e !important;
     }
 
     .hero-title {
         text-align: center;
         font-size: 3rem;
         font-weight: 800;
-        color: #1a1a2e;
+        color: #1a1a2e !important;
         margin-bottom: 0.5rem;
     }
 
     .hero-subtitle {
         text-align: center;
         font-size: 1.2rem;
-        color: #0f7173;
+        color: #0f7173 !important;
         margin-bottom: 2rem;
     }
 
     .abstract-box {
-        background-color: white;
+        background: white;
         padding: 1.5rem;
-        border-radius: 15px;
+        border-radius: 16px;
         border-left: 6px solid #0f7173;
-        box-shadow: 0px 4px 15px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        color: #1a1a2e !important;
     }
 
     .card {
-        background-color: white;
-        padding: 1.2rem;
-        border-radius: 14px;
-        box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
+        background: white;
+        padding: 1.5rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        color: #1a1a2e !important;
         height: 100%;
     }
 
     .pipeline-box {
-        background-color: #0f7173;
-        color: white;
-        padding: 15px;
-        border-radius: 12px;
+        background: #0f7173;
+        color: white !important;
+        padding: 16px;
+        border-radius: 14px;
         text-align: center;
         font-weight: 600;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
     }
 
-    .metric-card {
+    div[data-testid="metric-container"] {
         background-color: white;
-        padding: 15px;
-        border-radius: 14px;
-        box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
-    }
-
-    .small-text {
-        color: #5f6b7a;
-        font-size: 0.95rem;
-    }
-
-    .centered {
-        text-align: center;
-    }
-
-    .takeaway-box {
-        background-color: white;
-        border-left: 6px solid #0f7173;
-        padding: 2rem;
         border-radius: 16px;
-        font-size: 1.2rem;
-        text-align: center;
-        box-shadow: 0px 4px 15px rgba(0,0,0,0.05);
+        padding: 18px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        border: 1px solid #e5e7eb;
     }
+
+    div[data-testid="metric-container"] label {
+        color: #0f7173 !important;
+        font-weight: 600;
+    }
+
+    div[data-testid="metric-container"] div {
+        color: #1a1a2e !important;
+    }
+
+    .stTabs [data-baseweb="tab"] {
+        color: #1a1a2e !important;
+        font-weight: 600;
+    }
+
+    .stTabs [aria-selected="true"] {
+        color: #0f7173 !important;
+    }
+
+    .stAlert {
+        border-radius: 14px;
+    }
+
+    table {
+        color: #1a1a2e !important;
+    }
+
 </style>
 """, unsafe_allow_html=True)
 
