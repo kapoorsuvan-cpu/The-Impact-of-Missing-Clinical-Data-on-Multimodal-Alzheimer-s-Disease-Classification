@@ -935,6 +935,16 @@ elif page == "Findings":
     st.dataframe(modality, use_container_width=True)
     st.dataframe(ablation, use_container_width=True)
 
+    st.markdown("""
+    ### Interpretation
+    
+    The scientific results tables summarize the quantitative outcomes across all modeling experiments, modality configurations, and robustness evaluations.
+    
+    The consistency of Logistic Regression across both standard and missing-modality conditions reinforced its selection as the final deployed modeling framework. Cross-experimental stability was especially important because clinical AI systems require predictable behavior under incomplete records and operational variability.
+    
+    The ablation studies further demonstrated that robustness improvements were systematic rather than isolated to a single experiment or dataset partition.
+    """)
+
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
