@@ -715,16 +715,14 @@ elif page == "Findings":
         marker_line_width=1.5,
         opacity=0.92
     )
-    
     fig1.update_layout(
-        title=None,
         paper_bgcolor=CHART_COLORS["bg"],
         plot_bgcolor=CHART_COLORS["bg"],
         font=dict(
             color=CHART_COLORS["text"],
             family="Inter"
         ),
-        
+    
         xaxis=dict(
             showgrid=False
         ),
