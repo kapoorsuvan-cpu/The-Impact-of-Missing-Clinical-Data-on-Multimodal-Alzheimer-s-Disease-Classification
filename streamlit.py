@@ -701,18 +701,35 @@ elif page == "Findings":
         "Model": ["Logistic Regression", "Random Forest", "Extra Trees"],
         "ROC-AUC": [0.977, 0.962, 0.968]
     })
-
+    
     fig1 = px.bar(
         performance,
         x="Model",
         y="ROC-AUC",
-        color="ROC-AUC",
-        template="plotly_dark"
+        template="plotly_dark",
+        color_discrete_sequence=[CHART_COLORS["primary"]]
     )
-
+    
+    fig1.update_traces(
+        marker_line_color=CHART_COLORS["border"],
+        marker_line_width=1.5,
+        opacity=0.92
+    )
+    
     fig1.update_layout(
-        paper_bgcolor="#0B0F19",
-        plot_bgcolor="#0B0F19"
+        paper_bgcolor=CHART_COLORS["bg"],
+        plot_bgcolor=CHART_COLORS["bg"],
+        font=dict(
+            color=CHART_COLORS["text"],
+            family="Inter"
+        ),
+        title_font_size=24,
+        xaxis=dict(
+            showgrid=False
+        ),
+        yaxis=dict(
+            gridcolor="rgba(148,163,184,0.12)"
+        )
     )
 
     st.plotly_chart(fig1, use_container_width=True)
@@ -725,18 +742,34 @@ elif page == "Findings":
         "Modality": ["Clinical", "MRI", "Multimodal"],
         "Performance": [0.942, 0.891, 0.977]
     })
-
     fig2 = px.bar(
         modality,
         x="Modality",
         y="Performance",
-        color="Performance",
-        template="plotly_dark"
+        template="plotly_dark",
+        color_discrete_sequence=[
+            CHART_COLORS["primary"],
+            CHART_COLORS["secondary"],
+            CHART_COLORS["tertiary"]
+        ]
     )
-
+    
+    fig2.update_traces(
+        marker_line_color=CHART_COLORS["border"],
+        marker_line_width=1.5
+    )
+    
     fig2.update_layout(
-        paper_bgcolor="#0B0F19",
-        plot_bgcolor="#0B0F19"
+        paper_bgcolor=CHART_COLORS["bg"],
+        plot_bgcolor=CHART_COLORS["bg"],
+        font=dict(
+            color=CHART_COLORS["text"],
+            family="Inter"
+        ),
+        xaxis=dict(showgrid=False),
+        yaxis=dict(
+            gridcolor="rgba(148,163,184,0.12)"
+        )
     )
 
     st.plotly_chart(fig2, use_container_width=True)
@@ -750,30 +783,54 @@ elif page == "Findings":
         "Baseline": [0.95, 0.88, 0.80, 0.73],
         "Robust": [0.96, 0.91, 0.87, 0.84]
     })
-
     fig3 = go.Figure()
-
+    
     fig3.add_trace(go.Scatter(
         x=robustness["Missingness"],
         y=robustness["Baseline"],
         mode="lines+markers",
-        name="Baseline"
+        name="Baseline",
+        line=dict(
+            color="#94A3B8",
+            width=4
+        ),
+        marker=dict(size=8)
     ))
-
+    
     fig3.add_trace(go.Scatter(
         x=robustness["Missingness"],
         y=robustness["Robust"],
         mode="lines+markers",
-        name="Robust"
+        name="Robust",
+        line=dict(
+            color="#60A5FA",
+            width=4
+        ),
+        marker=dict(size=8),
+        fill="tonexty",
+        fillcolor="rgba(96,165,250,0.08)"
     ))
-
+    
     fig3.update_layout(
         template="plotly_dark",
-        title="Robustness Curves",
-        paper_bgcolor="#0B0F19",
-        plot_bgcolor="#0B0F19"
+        paper_bgcolor=CHART_COLORS["bg"],
+        plot_bgcolor=CHART_COLORS["bg"],
+        font=dict(
+            color=CHART_COLORS["text"],
+            family="Inter"
+        ),
+        xaxis=dict(
+            title="Missingness %",
+            gridcolor="rgba(148,163,184,0.08)"
+        ),
+        yaxis=dict(
+            title="ROC-AUC",
+            gridcolor="rgba(148,163,184,0.08)"
+        ),
+        legend=dict(
+            bgcolor="rgba(0,0,0,0)"
+        )
     )
-
     st.plotly_chart(fig3, use_container_width=True)
 
     st.markdown("<hr>", unsafe_allow_html=True)
@@ -786,16 +843,44 @@ elif page == "Findings":
         "Peak Accuracy": [0.977, 0.975, 0.971, 0.962]
     })
 
-    fig4 = px.line(
-        ablation,
-        x="Dropout Rate",
-        y=["Robustness", "Peak Accuracy"],
-        template="plotly_dark"
-    )
-
+    fig4 = go.Figure()
+    
+    fig4.add_trace(go.Scatter(
+        x=ablation["Dropout Rate"],
+        y=ablation["Robustness"],
+        mode="lines+markers",
+        name="Robustness",
+        line=dict(
+            color="#60A5FA",
+            width=4
+        )
+    ))
+    
+    fig4.add_trace(go.Scatter(
+        x=ablation["Dropout Rate"],
+        y=ablation["Peak Accuracy"],
+        mode="lines+markers",
+        name="Peak Accuracy",
+        line=dict(
+            color="#94A3B8",
+            width=4
+        )
+    ))
+    
     fig4.update_layout(
-        paper_bgcolor="#0B0F19",
-        plot_bgcolor="#0B0F19"
+        template="plotly_dark",
+        paper_bgcolor=CHART_COLORS["bg"],
+        plot_bgcolor=CHART_COLORS["bg"],
+        font=dict(
+            color=CHART_COLORS["text"],
+            family="Inter"
+        ),
+        xaxis=dict(
+            gridcolor="rgba(148,163,184,0.08)"
+        ),
+        yaxis=dict(
+            gridcolor="rgba(148,163,184,0.08)"
+        )
     )
 
     st.plotly_chart(fig4, use_container_width=True)
@@ -821,12 +906,20 @@ elif page == "Findings":
     fig5 = px.imshow(
         corr,
         text_auto=True,
-        template="plotly_dark"
+        color_continuous_scale=[
+            [0.0, "#1E293B"],
+            [0.5, "#60A5FA"],
+            [1.0, "#EF4444"]
+        ]
     )
-
+    
     fig5.update_layout(
-        paper_bgcolor="#0B0F19",
-        plot_bgcolor="#0B0F19"
+        paper_bgcolor=CHART_COLORS["bg"],
+        plot_bgcolor=CHART_COLORS["bg"],
+        font=dict(
+            color=CHART_COLORS["text"],
+            family="Inter"
+        )
     )
 
     st.plotly_chart(fig5, use_container_width=True)
