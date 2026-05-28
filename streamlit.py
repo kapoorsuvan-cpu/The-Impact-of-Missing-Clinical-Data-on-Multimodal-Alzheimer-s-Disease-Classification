@@ -707,7 +707,8 @@ elif page == "Findings":
         x="Model",
         y="ROC-AUC",
         template="plotly_dark",
-        color_discrete_sequence=[CHART_COLORS["primary"]]
+        color_discrete_sequence=[CHART_COLORS["primary"]],
+        title=""
     )
     
     fig1.update_traces(
