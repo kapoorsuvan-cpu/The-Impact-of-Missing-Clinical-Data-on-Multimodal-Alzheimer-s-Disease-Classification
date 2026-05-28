@@ -264,9 +264,9 @@ if page == "Home":
             Improving Robustness of Multimodal Alzheimer’s Disease Classification Under Missing Clinical Data
         </h1>
     
-        <div class='hero-subtitle'>
+        <p class='hero-subtitle'>
             This research investigates how multimodal machine learning systems for Alzheimer’s disease diagnosis behave under incomplete clinical information and missing modalities.
-        </div>
+        </p>
     </div>
     """, unsafe_allow_html=True)
 
