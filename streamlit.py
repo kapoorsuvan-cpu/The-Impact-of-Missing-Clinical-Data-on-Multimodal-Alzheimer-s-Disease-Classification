@@ -52,7 +52,7 @@ section[data-testid="stSidebar"] {
 }
 
 .hero-title {
-    font-size: 5rem;
+    font-size: 3.5rem;
     font-weight: 900;
     color: #F9FAFB;
     line-height: 1.02;
@@ -262,21 +262,20 @@ with st.sidebar:
 
 if page == "Home":
 
-    st.markdown("""
-    <div class='hero'>
-        <div class='hero-title'>
-            Improving Robustness of Multimodal<br>
-            Alzheimer’s Disease Classification Under<br>
-            Missing Clinical Data
-        </div>
+    st.markdown(
+        """
+        <div class='hero'>
+            <h1 class='hero-title'>
+                Improving Robustness of Multimodal Alzheimer’s Disease Classification Under Missing Clinical Data
+            </h1>
     
-        <p class='hero-subtitle'>
-            This research investigates how multimodal machine learning systems
-            for Alzheimer’s disease diagnosis behave under incomplete clinical
-            information and missing modalities.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+            <div class='hero-subtitle'>
+                This research investigates how multimodal machine learning systems for Alzheimer’s disease diagnosis behave under incomplete clinical information and missing modalities.
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
     c1, c2, c3, c4 = st.columns(4)
 
