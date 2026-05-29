@@ -1036,149 +1036,72 @@ elif page == "Findings":
 # =========================
 # KEY TAKEAWAYS PAGE
 # =========================
-
-elif page == "Key Takeaways":
-
-    section_header(
-        "Key Takeaways",
-        "Executive summary of the project's primary scientific findings"
-    )
-
-    st.markdown("<hr>", unsafe_allow_html=True)
-
-    st.markdown("""
-    ## Core Finding
-
-    Multimodal Alzheimer's disease classification systems achieve extremely strong predictive performance under ideal conditions, but their reliability degrades when clinical information becomes unavailable.
-
-    This project investigated whether robustness-focused training strategies can improve resilience under missing clinical data while preserving baseline predictive performance.
-
-    The results demonstrated that modality dropout training substantially reduced performance degradation under missing modality conditions without meaningfully sacrificing overall ROC-AUC.
-    """)
-
-    st.markdown("<hr>", unsafe_allow_html=True)
-
-    col1, col2 = st.columns([1.3, 1])
-
-    with col1:
-
+    elif page == "Key Takeaways":
+    
+        section_header(
+            "Key Takeaways",
+            "Summary of the project's primary findings"
+        )
+    
+        st.markdown("<hr>", unsafe_allow_html=True)
+    
         st.markdown("""
-        ## Clinical Significance
-
+        ## Research Question
+    
+        How do multimodal Alzheimer's disease classification systems behave when clinical information becomes incomplete, and can robustness-focused training improve resilience to missing data?
+    
         ...
-
-        ...
-
-        ...
-
         """)
-
-    with col2:
-
+    
+        st.markdown("<hr>", unsafe_allow_html=True)
+    
         st.markdown("""
-        ## Deployment Implications
-
+        ## Main Findings
+    
+        ### Finding 1: Multimodal models are vulnerable to missing clinical information
+    
         ...
-
+    
+        ### Finding 2: Modality dropout improves robustness
+    
         ...
-
+    
+        ### Finding 3: Robustness can be improved without sacrificing baseline performance
+    
         ...
-
+    
         """)
-
-    st.markdown("<hr>", unsafe_allow_html=True)
-
-    st.markdown("""
-    ## Key Research Contributions
-
-    ### Robust Multimodal Learning
-
-    ...
-
-    ...
-
-    ...
-
-    ### Missing Modality Evaluation Framework
-
-    ...
-
-    ...
-
-    ...
-
-    ### Clinical AI Reliability
-
-    ...
-
-    ...
-
-    ...
-    """)
-
-    st.markdown("<hr>", unsafe_allow_html=True)
-
-    st.markdown("""
-    ## Limitations
-
-    ...
-
-    ...
-
-    ...
-
-    """)
-
-    st.markdown("<hr>", unsafe_allow_html=True)
-
-    st.markdown("""
-    ## Future Directions
-
-    ### External Validation
-
-    ...
-
-    ### Longitudinal Modeling
-
-    ...
-
-    ### Transformer Architectures
-
-    ...
-
-    ### Realistic Missingness Mechanisms
-
-    ...
-    """)
-
-    st.markdown("<hr>", unsafe_allow_html=True)
-
-    st.markdown("""
-    ## Final Conclusion
-
-    ...
-
-    ...
-
-    ...
-
-    """)
-
-    st.markdown(
-        """
-        <div style="
-            margin-top:40px;
-            padding:30px;
-            border-radius:20px;
-            border:1px solid #374151;
-            background:rgba(17,24,39,0.65);
-            font-size:1.25rem;
-            line-height:1.8;
-            color:#F9FAFB;
-            text-align:center;
-        ">
-            “Clinically deployable AI systems must optimize not only for predictive performance, but also for resilience under real-world uncertainty.”
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    
+        st.markdown("<hr>", unsafe_allow_html=True)
+    
+        st.markdown("""
+        ## Why This Matters
+    
+        ...
+    
+        ...
+    
+        ...
+    
+        """)
+    
+        st.markdown("<hr>", unsafe_allow_html=True)
+    
+        st.markdown(
+            """
+            <div style="
+                margin-top:30px;
+                padding:30px;
+                border-radius:20px;
+                border:1px solid #374151;
+                background:rgba(17,24,39,0.65);
+                font-size:1.2rem;
+                line-height:1.8;
+                color:#F9FAFB;
+                text-align:center;
+            ">
+                Clinically deployable AI systems must optimize not only for predictive performance, but also for resilience under real-world uncertainty.
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
