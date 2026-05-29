@@ -705,6 +705,18 @@ elif page == "Findings":
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
+    st.markdown("""
+    ### What These Results Mean
+    
+    The primary research question of this project was whether multimodal Alzheimer's disease classification systems can remain reliable when clinical information becomes incomplete or unavailable.
+    
+    The results demonstrate that the multimodal framework achieved excellent predictive performance under standard conditions, with **95.2% accuracy** and a **ROC-AUC of 0.977**, indicating near-perfect discrimination between cognitively normal (CN) and dementia (DEM) patients. The model also maintained strong **recall (91.7%)**, meaning it successfully identified the vast majority of Alzheimer's cases, while a **specificity of 95.8%** indicates very few cognitively normal patients were incorrectly classified as having dementia.
+    
+    Most importantly, the **Robustness Δ** metric directly addresses the project's central research question. This value represents the performance degradation experienced when clinical information is missing. The baseline multimodal model suffered a **0.140 drop in ROC-AUC**, whereas the modality-dropout-trained model reduced that degradation to **0.114**. In practical terms, this means the robust model was significantly more resilient when clinical records became incomplete.
+    
+    These findings suggest that while multimodal AI systems are highly effective under ideal conditions, they can be vulnerable to missing data. However, modality dropout training successfully improves robustness without sacrificing baseline predictive performance, making the resulting system substantially more suitable for real-world clinical deployment where incomplete patient records are common.
+    """)
+
     section_header("Model Performance")
 
     performance = pd.DataFrame({
