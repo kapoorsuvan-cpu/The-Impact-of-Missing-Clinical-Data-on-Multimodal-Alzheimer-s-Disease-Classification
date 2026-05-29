@@ -940,19 +940,37 @@ elif page == "Findings":
 
     section_header("Scientific Results Tables")
 
-    st.dataframe(
-        performance.style.hide(axis="index"),
-        use_container_width=True
-    )
+    col1, col2, col3 = st.columns(3)
     
-    st.dataframe(
-        modality.style.hide(axis="index"),
-        use_container_width=True
-    )
+    with col1:
+        st.markdown("##### Model Performance")
+        st.dataframe(
+            performance.style
+                .hide(axis="index")
+                .format({"ROC-AUC": "{:.3f}"}),
+            use_container_width=True
+        )
     
-    st.dataframe(
-        ablation.style.hide(axis="index"),
-        use_container_width=True
+    with col2:
+        st.markdown("##### Modality Results")
+        st.dataframe(
+            modality.style
+                .hide(axis="index")
+                .format({"Performance": "{:.3f}"}),
+            use_container_width=True
+        )
+    
+    with col3:
+        st.markdown("##### Ablation Results")
+        st.dataframe(
+            ablation.style
+                .hide(axis="index")
+                .format({
+                    "Dropout Rate": "{:.1f}",
+                    "Robustness": "{:.2f}",
+                    "Peak Accuracy": "{:.3f}"
+                }),
+            use_container_width=True
     )
 
     st.markdown("""
