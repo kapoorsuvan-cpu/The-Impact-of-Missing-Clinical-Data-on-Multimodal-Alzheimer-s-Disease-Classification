@@ -944,33 +944,31 @@ elif page == "Findings":
     
     with col1:
         st.markdown("##### Model Performance")
-        st.dataframe(
-                performance.reset_index(drop=True).style.hide(axis="index")
-                .format({"ROC-AUC": "{:.3f}"}),
-            use_container_width=True
+        st.table(
+            performance.style
+            .hide(axis="index")
+            .format({"ROC-AUC": "{:.3f}"})
         )
     
     with col2:
         st.markdown("##### Modality Results")
-        st.dataframe(
+        st.table(
             modality.style
-                .hide(axis="index")
-                .format({"Performance": "{:.3f}"}),
-            use_container_width=True
+            .hide(axis="index")
+            .format({"Performance": "{:.3f}"})
         )
     
     with col3:
         st.markdown("##### Ablation Results")
-        st.dataframe(
+        st.table(
             ablation.style
-                .hide(axis="index")
-                .format({
-                    "Dropout Rate": "{:.1f}",
-                    "Robustness": "{:.2f}",
-                    "Peak Accuracy": "{:.3f}"
-                }),
-            use_container_width=True
-    )
+            .hide(axis="index")
+            .format({
+                "Dropout Rate": "{:.1f}",
+                "Robustness": "{:.2f}",
+                "Peak Accuracy": "{:.3f}"
+            })
+        )
 
     st.markdown("""
     ### Interpretation
