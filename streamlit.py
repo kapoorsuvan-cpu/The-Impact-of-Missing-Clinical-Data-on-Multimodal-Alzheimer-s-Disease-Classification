@@ -1131,6 +1131,26 @@ elif page == "Key Takeaways":
         in resilience under missing clinical information.
         </div>
         """, unsafe_allow_html=True)
+    st.markdown("""
+    <div style="
+    padding:25px;
+    border-left:5px solid #60A5FA;
+    background:rgba(96,165,250,0.08);
+    border-radius:12px;
+    margin-top:20px;
+    margin-bottom:20px;
+    ">
+    
+    ### Key Insight
+    
+    The most important result was not that the model achieved a ROC-AUC of 0.977.
+    
+    The most important result was that a model with nearly identical baseline performance became substantially more resilient when clinical information disappeared.
+    
+    This suggests that robustness training can improve deployability without sacrificing predictive performance.
+    
+    </div>
+    """, unsafe_allow_html=True)
     
     st.markdown("<hr>", unsafe_allow_html=True)
 
