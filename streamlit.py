@@ -945,8 +945,7 @@ elif page == "Findings":
     with col1:
         st.markdown("##### Model Performance")
         st.dataframe(
-            performance.style
-                .hide(axis="index")
+                performance.reset_index(drop=True).style.hide(axis="index")
                 .format({"ROC-AUC": "{:.3f}"}),
             use_container_width=True
         )
