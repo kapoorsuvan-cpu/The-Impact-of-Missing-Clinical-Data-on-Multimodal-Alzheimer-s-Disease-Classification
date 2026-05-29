@@ -1039,17 +1039,14 @@ elif page == "Findings":
 elif page == "Key Takeaways":
 
     section_header(
-        "Key Takeaways",
-        "Summary of the project's primary findings"
+        "Key Takeaways"
     )
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
     st.markdown("""
     ## Research Question
-
-    The central question of this project was:
-
+    
     **How does multimodal Alzheimer's disease classification degrade when clinical information becomes unavailable, and can modality dropout training improve robustness to missing data?**
 
     While most Alzheimer's machine learning studies assume complete patient records, real-world healthcare systems frequently contain incomplete cognitive assessments, missing demographic variables, and partially documented medical histories. This project therefore focused not only on predictive performance, but also on resilience under missing clinical information.
@@ -1114,27 +1111,3 @@ elif page == "Key Takeaways":
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
-    st.markdown(
-        """
-        <div style="
-            margin-top:30px;
-            padding:30px;
-            border-radius:20px;
-            border:1px solid #374151;
-            background:rgba(17,24,39,0.65);
-            font-size:1.2rem;
-            line-height:1.8;
-            color:#F9FAFB;
-            text-align:center;
-        ">
-            <strong>Final Conclusion</strong><br><br>
-
-            Multimodal Alzheimer's disease classifiers can achieve extremely strong predictive performance, but standard models become vulnerable when clinical information is missing.
-
-            By introducing modality dropout training, this project demonstrated that robustness can be substantially improved while maintaining nearly identical baseline ROC-AUC performance.
-
-            The results suggest that future healthcare AI systems should optimize not only for predictive accuracy, but also for resilience under incomplete real-world patient data.
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
