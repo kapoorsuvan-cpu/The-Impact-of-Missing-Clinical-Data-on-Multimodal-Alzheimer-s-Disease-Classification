@@ -1036,72 +1036,72 @@ elif page == "Findings":
 # =========================
 # KEY TAKEAWAYS PAGE
 # =========================
-    elif page == "Key Takeaways":
-    
-        section_header(
-            "Key Takeaways",
-            "Summary of the project's primary findings"
-        )
-    
-        st.markdown("<hr>", unsafe_allow_html=True)
-    
-        st.markdown("""
-        ## Research Question
-    
-        How do multimodal Alzheimer's disease classification systems behave when clinical information becomes incomplete, and can robustness-focused training improve resilience to missing data?
-    
-        ...
-        """)
-    
-        st.markdown("<hr>", unsafe_allow_html=True)
-    
-        st.markdown("""
-        ## Main Findings
-    
-        ### Finding 1: Multimodal models are vulnerable to missing clinical information
-    
-        ...
-    
-        ### Finding 2: Modality dropout improves robustness
-    
-        ...
-    
-        ### Finding 3: Robustness can be improved without sacrificing baseline performance
-    
-        ...
-    
-        """)
-    
-        st.markdown("<hr>", unsafe_allow_html=True)
-    
-        st.markdown("""
-        ## Why This Matters
-    
-        ...
-    
-        ...
-    
-        ...
-    
-        """)
-    
-        st.markdown("<hr>", unsafe_allow_html=True)
-    
-        st.markdown(
-            """
-            <div style="
-                margin-top:30px;
-                padding:30px;
-                border-radius:20px;
-                border:1px solid #374151;
-                background:rgba(17,24,39,0.65);
-                font-size:1.2rem;
-                line-height:1.8;
-                color:#F9FAFB;
-                text-align:center;
-            ">
-                Clinically deployable AI systems must optimize not only for predictive performance, but also for resilience under real-world uncertainty.
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+elif page == "Key Takeaways":
+
+    section_header(
+        "Key Takeaways",
+        "Summary of the project's primary findings"
+    )
+
+    st.markdown("<hr>", unsafe_allow_html=True)
+
+    st.markdown("""
+    ## Research Question
+
+    How do multimodal Alzheimer's disease classification systems behave when clinical information becomes incomplete, and can robustness-focused training improve resilience to missing data?
+
+    ...
+    """)
+
+    st.markdown("<hr>", unsafe_allow_html=True)
+
+    st.markdown("""
+    ## Main Findings
+
+    ### Finding 1: Multimodal models are vulnerable to missing clinical information
+
+    ...
+
+    ### Finding 2: Modality dropout improves robustness
+
+    ...
+
+    ### Finding 3: Robustness can be improved without sacrificing baseline performance
+
+    ...
+
+    """)
+
+    st.markdown("<hr>", unsafe_allow_html=True)
+
+    st.markdown("""
+    ## Why This Matters
+
+    ...
+
+    ...
+
+    ...
+
+    """)
+
+    st.markdown("<hr>", unsafe_allow_html=True)
+
+    st.markdown(
+        """
+        <div style="
+            margin-top:30px;
+            padding:30px;
+            border-radius:20px;
+            border:1px solid #374151;
+            background:rgba(17,24,39,0.65);
+            font-size:1.2rem;
+            line-height:1.8;
+            color:#F9FAFB;
+            text-align:center;
+        ">
+            Clinically deployable AI systems must optimize not only for predictive performance, but also for resilience under real-world uncertainty.
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
