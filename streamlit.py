@@ -696,7 +696,7 @@ elif page == "Findings":
         ("Recall", "91.7%"),
         ("Specificity", "95.8%"),
         ("F1 Score", "84.6%"),
-        ("Robustness Δ", "18.6% ↓")
+        ("Robustness Δ", "-18.6%")
     ]
 
     for col, metric in zip(cols, metrics):
