@@ -1048,9 +1048,11 @@ elif page == "Key Takeaways":
     st.markdown("""
     ## Research Question
 
-    How do multimodal Alzheimer's disease classification systems behave when clinical information becomes incomplete, and can robustness-focused training improve resilience to missing data?
+    The central question of this project was:
 
-    ...
+    **How does multimodal Alzheimer's disease classification degrade when clinical information becomes unavailable, and can modality dropout training improve robustness to missing data?**
+
+    While most Alzheimer's machine learning studies assume complete patient records, real-world healthcare systems frequently contain incomplete cognitive assessments, missing demographic variables, and partially documented medical histories. This project therefore focused not only on predictive performance, but also on resilience under missing clinical information.
     """)
 
     st.markdown("<hr>", unsafe_allow_html=True)
@@ -1058,31 +1060,56 @@ elif page == "Key Takeaways":
     st.markdown("""
     ## Main Findings
 
-    ### Finding 1: Multimodal models are vulnerable to missing clinical information
+    ### Multimodal Models Achieve Strong Predictive Performance
 
-    ...
+    The final multimodal Logistic Regression model achieved:
 
-    ### Finding 2: Modality dropout improves robustness
+    - ROC-AUC: **0.977**
+    - Accuracy: **95.2%**
+    - Recall: **91.7%**
+    - Specificity: **95.8%**
+    - F1 Score: **84.6%**
 
-    ...
+    These results demonstrate that combining clinical variables and MRI biomarkers provides excellent discrimination between cognitively normal (CN) and dementia (DEM) patients.
 
-    ### Finding 3: Robustness can be improved without sacrificing baseline performance
+    ### Standard Multimodal Models Are Vulnerable to Missing Clinical Data
 
-    ...
+    When clinical information was completely removed from the test set, ROC-AUC decreased from:
 
+    **0.977 → 0.771**
+
+    representing a performance loss of **0.205 ROC-AUC**.
+
+    This finding demonstrated that standard multimodal systems can become highly dependent on clinical information and may not generalize well when patient records are incomplete.
+
+    ### Modality Dropout Improves Robustness
+
+    After introducing modality dropout training, the model maintained nearly identical full-data performance while improving resilience under missing clinical information.
+
+    Cross-validated results showed:
+
+    - Baseline Performance Drop: **0.140 ± 0.028**
+    - Robust Performance Drop: **0.114 ± 0.037**
+
+    This represents an approximate **18.6% reduction in performance degradation**, indicating that robustness training successfully improved tolerance to missing data without sacrificing baseline accuracy.
     """)
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
     st.markdown("""
-    ## Why This Matters
+    ## Supporting Evidence
 
-    ...
+    Additional experiments helped explain why robustness improvements were possible.
 
-    ...
+    - Clinical-only model: **ROC-AUC = 0.969**
+    - MRI-only model: **ROC-AUC = 0.825**
+    - Multimodal model: **ROC-AUC = 0.977**
 
-    ...
+    These results demonstrate that MRI biomarkers contain meaningful predictive information even when clinical testing is unavailable.
 
+    Missingness simulations further showed that robustness-trained models remained substantially more stable as missing clinical information increased from 10% to 70%, while baseline models degraded steadily.
+
+    The robustness gap widened as missingness became more severe, providing additional evidence that modality dropout distributes predictive importance more effectively across modalities.
     """)
 
     st.markdown("<hr>", unsafe_allow_html=True)
@@ -1100,7 +1127,13 @@ elif page == "Key Takeaways":
             color:#F9FAFB;
             text-align:center;
         ">
-            Clinically deployable AI systems must optimize not only for predictive performance, but also for resilience under real-world uncertainty.
+            <strong>Final Conclusion</strong><br><br>
+
+            Multimodal Alzheimer's disease classifiers can achieve extremely strong predictive performance, but standard models become vulnerable when clinical information is missing.
+
+            By introducing modality dropout training, this project demonstrated that robustness can be substantially improved while maintaining nearly identical baseline ROC-AUC performance.
+
+            The results suggest that future healthcare AI systems should optimize not only for predictive accuracy, but also for resilience under incomplete real-world patient data.
         </div>
         """,
         unsafe_allow_html=True
