@@ -1056,41 +1056,82 @@ elif page == "Key Takeaways":
 
     st.markdown("""
     ## Main Findings
-
-    ### Multimodal Models Achieve Strong Predictive Performance
-
-    The final multimodal Logistic Regression model achieved:
-
-    - ROC-AUC: **0.977**
-    - Accuracy: **95.2%**
-    - Recall: **91.7%**
-    - Specificity: **95.8%**
-    - F1 Score: **84.6%**
-
-    These results demonstrate that combining clinical variables and MRI biomarkers provides excellent discrimination between cognitively normal (CN) and dementia (DEM) patients.
-
-    ### Standard Multimodal Models Are Vulnerable to Missing Clinical Data
-
-    When clinical information was completely removed from the test set, ROC-AUC decreased from:
-
-    **0.977 → 0.771**
-
-    representing a performance loss of **0.205 ROC-AUC**.
-
-    This finding demonstrated that standard multimodal systems can become highly dependent on clinical information and may not generalize well when patient records are incomplete.
-
-    ### Modality Dropout Improves Robustness
-
-    After introducing modality dropout training, the model maintained nearly identical full-data performance while improving resilience under missing clinical information.
-
-    Cross-validated results showed:
-
-    - Baseline Performance Drop: **0.140 ± 0.028**
-    - Robust Performance Drop: **0.114 ± 0.037**
-
-    This represents an approximate **18.6% reduction in performance degradation**, indicating that robustness training successfully improved tolerance to missing data without sacrificing baseline accuracy.
     """)
-
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("""
+        <div style="
+            padding:20px;
+            border-radius:18px;
+            border:1px solid #374151;
+            background:rgba(17,24,39,0.65);
+            height:260px;
+        ">
+        <h3>Predictive Performance</h3>
+    
+        The final multimodal Logistic Regression model achieved:
+    
+        • ROC-AUC = <b>0.977</b><br>
+        • Accuracy = <b>95.2%</b><br>
+        • Recall = <b>91.7%</b><br>
+        • Specificity = <b>95.8%</b>
+    
+        <br>
+    
+        These results demonstrate extremely strong discrimination between cognitively normal and dementia patients.
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div style="
+            padding:20px;
+            border-radius:18px;
+            border:1px solid #374151;
+            background:rgba(17,24,39,0.65);
+            height:260px;
+        ">
+        <h3>Missing Clinical Data</h3>
+    
+        When clinical information was removed:
+    
+        <br>
+    
+        ROC-AUC fell from
+    
+        <h2>0.977 → 0.771</h2>
+    
+        representing a performance loss of 0.205 ROC-AUC.
+    
+        This revealed a strong dependence on clinical variables.
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown("""
+        <div style="
+            padding:20px;
+            border-radius:18px;
+            border:1px solid #374151;
+            background:rgba(17,24,39,0.65);
+            height:260px;
+        ">
+        <h3>Robustness Training</h3>
+    
+        Modality dropout reduced degradation from:
+    
+        <h2>0.140 → 0.114</h2>
+    
+        An approximate
+    
+        <h2>18.6% improvement</h2>
+    
+        in resilience under missing clinical information.
+        </div>
+        """, unsafe_allow_html=True)
+    
     st.markdown("<hr>", unsafe_allow_html=True)
 
     st.markdown("""
